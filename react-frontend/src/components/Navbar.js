@@ -1,9 +1,6 @@
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { HomeIcon } from '@heroicons/react/solid'
-import { CartIcon } from '@heroicons/react/outline'
-import { ShoppingCartIcon } from '@heroicons/react/outline'
-import { SignInIcon } from '@heroicons/react/outline'
 import { useState } from 'react'
+import { Link } from 'react-router-dom';
 
 
 export default function Navbar() {
@@ -22,7 +19,7 @@ export default function Navbar() {
                 </div>
                 <div className='hidden sm:flex pr-5 items-center'>
                     <ul className='hidden sm:flex'>
-                        <li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-home text-xl p-1'></i>HOME</div></li>
+                        <Link to={{ pathname: '/' }}><li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-home text-xl p-1'></i>HOME</div></li></Link>
                         <li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li>
                     </ul>
                     <button className='my-btns ml-5'>LOGIN</button>
