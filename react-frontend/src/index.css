@@ -13,8 +13,16 @@
         hover:bg-indigo-300 rounded-md px-4 py-1
     } */
 
-    button {
-        @apply text-white border bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-4 py-1
+    .my-btns {
+        @apply text-white border bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-5 py-2
+    }
+
+    .category-items {
+        @apply m-5 border border-black p-10 rounded-md h-[500px]
+    }
+
+    .category-images {
+        @apply w-full h-5/6 rounded-md object-cover
     }
 
 }

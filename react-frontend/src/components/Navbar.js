@@ -14,18 +14,18 @@ export default function Navbar() {
     }
 
     return (
-        <div className='w-screen h-[60px] z-10 bg-zinc-200 fixed drop-shadow-lg'>
-            <div className='px-2 flex justify-between items-center w-full h-full'>
+        <div className='w-screen h-[50px] sm:h-[70px] lg:h-[90px] z-10 bg-zinc-200 drop-shadow-lg'>
+            <div className='px-5 flex justify-between items-center w-full h-full'>
                 <div className='flex items-center'>
                     <h1 className='text-2xl font-bold mr-4 sm:text-3xl'>HalalBrothers</h1>
 
                 </div>
-                <div className='hidden sm:flex pr-2 items-center'>
+                <div className='hidden sm:flex pr-5 items-center'>
                     <ul className='hidden sm:flex'>
                         <li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-home text-xl p-1'></i>HOME</div></li>
-                        <li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-cart text-xl p-1'></i>Cart</div></li>
+                        <li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li>
                     </ul>
-                    <button>LOGIN</button>
+                    <button className='my-btns ml-5'>LOGIN</button>
                 </div>
                 <div className='sm:hidden'>
                     {!navOpen && <MenuIcon onClick={toggleNav} className='w-5' />}
@@ -35,9 +35,9 @@ export default function Navbar() {
 
             {navOpen && <ul className='absolute bg-zinc-200 w-full px-8 text-center sm:hidden'>
                 <li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center'><i className='bx bx-home text-xl p-1'></i>HOME</div></li>
-                <li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center'><i className='bx bx-cart text-xl p-1'></i>Cart</div></li>
+                <li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li>
                 <div className='py-4'>
-                    <button>LOGIN</button>
+                    <button className='my-btns'>LOGIN</button>
                 </div>
             </ul>}
 
