@@ -1,0 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    .nav-list {
+        @apply p-4
+    }
+
+    /* light button */
+    /* button {
+        @apply text-black border bg-zinc-200 border-black
+        hover:bg-indigo-300 rounded-md px-4 py-1
+    } */
+
+    button {
+        @apply text-white border bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-4 py-1
+    }
+
+}
