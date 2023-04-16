@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
-import { Link } from 'react-router-dom';
+//Get 12 similar products.
+
+import React, { useState, useEffect } from 'react'
 import axios from './axios/AxiosSetup'
-import CategoryOptions from './CategoryOptions';
+import { Link } from 'react-router-dom'
 
+export default function SimilarProducts(props) {
+    const slug = props.slug
 
-export default function ProductList() {
-    const { category } = useParams();
     const [products, setProducts] = useState([])
 
     // Fetch using axios
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const response = await axios.get(`category/${category}/`)
+                const response = await axios.get(`similar_products/${slug}/`)
                 console.log(response)
                 setProducts(response.data.results)
             } catch (error) {
@@ -21,30 +21,10 @@ export default function ProductList() {
             }
         }
         fetchProducts();
-    }, [category])
-
-    // const url = `http://127.0.0.1:8000/api/category/${category}/`
-    // useEffect(() => {
-    //     fetch(url, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         }
-    //     })
-    //         .then(response => response.json())
-    //         .then(data => {
-    //             console.log(data)
-    //             setProducts(data.results)
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //         })
-    // }, [])
-
+    }, [slug])
     return (
         <div>
-            <CategoryOptions />
-            <p className='normal-headings mt-5'>Get some of the latest {category} from Halal Brothers!</p>
+            <p className='normal-headings'>Similar Products</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 mx-5 sm:mx-10 md:mx-20 lg:mx-40">
                 {products.map((product) => (
                     <div key={product.id} className='each-item'>

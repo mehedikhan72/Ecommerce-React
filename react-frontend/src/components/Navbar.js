@@ -12,7 +12,7 @@ export default function Navbar() {
 
     return (
         <div className='w-screen h-[50px] sm:h-[70px] lg:h-[90px] z-10 bg-zinc-200 drop-shadow-lg'>
-            <div className='px-5 flex justify-between items-center w-full h-full'>
+            <div className='px-8 flex justify-between items-center w-full h-full'>
                 <div className='flex items-center'>
                     <h1 className='text-2xl font-bold mr-4 sm:text-3xl'>HalalBrothers</h1>
 
