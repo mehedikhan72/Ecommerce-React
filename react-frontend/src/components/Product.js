@@ -28,6 +28,40 @@ export default function Product() {
 
   }, [slug, productId])
 
+  const [productSize, selectedProductSize] = useState(null);
+  const [productQuantity, selectedProductQuantity] = useState(1);
+
+  // Get the available product count of the selected size
+
+  const [sizeStock, setSizeStock] = useState(0);
+
+  useEffect(() => {
+    const fetchStock = async () => {
+      if (productSize) {
+        try {
+          const response = await axios.get(`get_size_specific_stock/${productId}/${productSize[0].size}/`)
+          setSizeStock(response.data)
+        } catch (error) {
+          console.log(error)
+        }
+      }
+    }
+
+    fetchStock();
+
+  }, [productSize])
+
+  const AddToCart = () => {
+    const existingCart = localStorage.getItem('cart');
+    let cart = existingCart ? JSON.parse(existingCart) : [];
+    const newItem = { id: cart.length, size: productSize, quantity: productQuantity, productData };
+    cart.push(newItem);
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }
+  // TODO: BUG: we made sure user cannot add to cart more than that is available. but when they add the same 
+  // product to the cart again, we show the old number like.. "only 3 left", wherease it's possible that he
+  // added those 3 items before. need to come up with a solution to this. 
+
   return (
     <div>
       <CategoryOptions />
@@ -47,7 +81,7 @@ export default function Product() {
                   <p>Availability : </p> <p className='success-text'>In stock</p>
                 </div>
                 <div>
-                  <p className='alert-text text-center mx-10 lg:mx-20 w-[250px]'>Only {productData.stock} left. Hurry up!</p>
+                  <p className='alert-text text-center mx-10 lg:mx-20 w-[250px]'>Only {sizeStock} left. Hurry up!</p>
                 </div>
               </div>}
 
@@ -66,10 +100,11 @@ export default function Product() {
                 <p className='text-4xl'>TK {productData.regular_price}</p>
               </div>}
 
-            <Size productId={productId} />
-            <Quantity />
+            <Size productId={productId} selectedProductSize={selectedProductSize} />
+            <Quantity selectedProductQuantity={selectedProductQuantity} sizeStock={sizeStock} />
+
             <div className='flex  mx-10 my-5 lg:mx-20 items-center'>
-              <button className='my-btns mr-2 w-[150px]'>Add To Cart</button>
+              <button onClick={AddToCart} className='my-btns mr-2 w-[150px]'>Add To Cart</button>
               <button className='my-btns ml-2 w-[150px]'>Buy Now</button>
 
             </div>

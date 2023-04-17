@@ -20,7 +20,7 @@ export default function Navbar() {
                 <div className='hidden sm:flex pr-5 items-center'>
                     <ul className='hidden sm:flex'>
                         <Link to={{ pathname: '/' }}><li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-home text-xl p-1'></i>HOME</div></li></Link>
-                        <li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li>
+                        <Link to={{ pathname: '/cart '}}><li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li></Link>
                     </ul>
                     <button className='my-btns ml-5'>LOGIN</button>
                 </div>

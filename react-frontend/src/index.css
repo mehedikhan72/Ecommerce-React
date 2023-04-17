@@ -21,8 +21,12 @@ body {
         @apply text-white border bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-5 py-2
     }
 
+    .my-big-btns {
+        @apply text-white border text-2xl bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-5 py-5
+    }
+
     .each-item {
-        @apply m-5 border border-black p-10 rounded-md h-[500px]
+        @apply m-5 border border-gray-500 p-10 rounded-md h-[500px]
     }
 
     .each-image {
@@ -62,7 +66,7 @@ body {
     }
 
     .alert-text {
-        @apply bg-yellow-400 border text-white border-white px-5 py-2 rounded-md font-bold
+        @apply bg-yellow-200 border text-black border-white px-5 py-2 rounded-md font-bold
     }
 
     .links-1 {
