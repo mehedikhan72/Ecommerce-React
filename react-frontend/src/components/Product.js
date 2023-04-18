@@ -4,14 +4,17 @@ import axios from './axios/AxiosSetup'
 import GetImages from './GetImages';
 import CategoryOptions from './CategoryOptions';
 import SimilarProducts from './SimilarProducts';
-import Size from './ProductPage/Size';
-import Quantity from './ProductPage/Quantity';
+import Size from './productpage/Size';
+import Quantity from './productpage/Quantity';
+import Loading from './utils/Loading';
+import Custom404 from './utils/Custom404';
 
 export default function Product() {
 
   const { slug } = useParams();
   const [productId, setProductId] = useState(null);
   const [productData, setProductData] = useState([]);
+  const [fetchComleted, setFetchCompleted] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -19,8 +22,10 @@ export default function Product() {
         const response = await axios.get(`product/${slug}/`)
         setProductId(response.data.id)
         setProductData(response.data)
+        setFetchCompleted(true)
       } catch (error) {
         console.log(error)
+        setFetchCompleted(true)
       }
     }
 
@@ -119,7 +124,8 @@ export default function Product() {
       </div>}
 
       {/* TODO: Add loading component later */}
-      {!productData || !productId && <p>Loading</p>}
+      {(!productData || !productId) && !fetchComleted && <Loading />}
+      {(!productData || !productId) && fetchComleted && <Custom404 />}
 
     </div>
   )
