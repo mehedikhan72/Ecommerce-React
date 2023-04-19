@@ -73,5 +73,7 @@ body {
         @apply m-1 sm:m-2 lg:m-5 text-xl font-bold text-center hover:underline
     }
 
-
+    .my-input-fields {
+        @apply border border-gray-500 rounded-md p-3 m-3 w-[300px]
+    }
 }

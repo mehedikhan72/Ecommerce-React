@@ -1,10 +1,14 @@
 import { MenuIcon, XIcon } from '@heroicons/react/outline'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
 import { Link } from 'react-router-dom';
+import AuthContext from './context/AuthContext';
 
 
 export default function Navbar() {
     const [navOpen, setNavOpen] = useState(false);
+
+    const { user } = useContext(AuthContext);
+    console.log(user)
 
     const toggleNav = () => {
         setNavOpen(!navOpen);
@@ -20,9 +24,10 @@ export default function Navbar() {
                 <div className='hidden sm:flex pr-5 items-center'>
                     <ul className='hidden sm:flex'>
                         <Link to={{ pathname: '/' }}><li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-home text-xl p-1'></i>HOME</div></li></Link>
-                        <Link to={{ pathname: '/cart '}}><li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li></Link>
+                        <Link to={{ pathname: '/cart ' }}><li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li></Link>
                     </ul>
-                    <button className='my-btns ml-5'>LOGIN</button>
+                    {!user && <Link to={{ pathname: '/login' }}><button className='my-btns ml-5'>LOGIN</button></Link>}
+                    {user && <p className='font-bold p-4'>{user.first_name.toUpperCase()}</p>}
                 </div>
                 <div className='sm:hidden'>
                     {!navOpen && <MenuIcon onClick={toggleNav} className='w-5' />}
@@ -31,10 +36,11 @@ export default function Navbar() {
             </div>
 
             {navOpen && <ul className='absolute bg-zinc-200 w-full px-8 text-center sm:hidden'>
-                <li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center'><i className='bx bx-home text-xl p-1'></i>HOME</div></li>
-                <li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li>
+                <Link to={{ pathname: '/' }}><li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center font-bold'><i className='bx bx-home text-xl p-1'></i>HOME</div></li></Link>
+                <Link to={{ pathname: '/cart ' }}><li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center font-bold'><i className='bx bx-cart text-xl p-1'></i>CART</div></li></Link>
                 <div className='py-4'>
-                    <button className='my-btns'>LOGIN</button>
+                    {!user && <Link to={{ pathname: '/login' }}><button className='my-btns'>LOGIN</button></Link>}
+                    {user && <p className='font-bold p-4'>{user.first_name.toUpperCase()}</p>}
                 </div>
             </ul>}
 

@@ -56,12 +56,18 @@ export default function Product() {
 
   }, [productSize])
 
+  const [addedToCart, setAddedToCart] = useState(false);
+
   const AddToCart = () => {
     const existingCart = localStorage.getItem('cart');
     let cart = existingCart ? JSON.parse(existingCart) : [];
     const newItem = { id: cart.length, size: productSize, quantity: productQuantity, productData };
     cart.push(newItem);
     localStorage.setItem('cart', JSON.stringify(cart));
+    setAddedToCart(true);
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 3000);
   }
   // TODO: BUG: we made sure user cannot add to cart more than that is available. but when they add the same 
   // product to the cart again, we show the old number like.. "only 3 left", wherease it's possible that he
@@ -78,7 +84,7 @@ export default function Product() {
           </div>
 
           {/* OTHER DATA */}
-          <div>
+          <div className='sm:ml-[100px] md:ml-[200px] lg:ml-0'>
             <p className='text-3xl sm:text-4xl font-bold mx-10 my-5 lg:mx-20 text-left'>{productData.name}</p>
             {productData.stock > 0 &&
               <div>
@@ -107,6 +113,11 @@ export default function Product() {
 
             <Size productId={productId} selectedProductSize={selectedProductSize} />
             <Quantity selectedProductQuantity={selectedProductQuantity} sizeStock={sizeStock} />
+
+            {/* TODO: Add a different animation later */}
+            {addedToCart &&
+              <p className='fixed success-text text-center w-[250px] bottom-5 right-5 animate-bounce'>Added to cart</p>
+            }
 
             <div className='flex  mx-10 my-5 lg:mx-20 items-center'>
               <button onClick={AddToCart} className='my-btns mr-2 w-[150px]'>Add To Cart</button>

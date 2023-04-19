@@ -4,7 +4,7 @@ import Size from './productpage/Size'
 
 export default function Cart() {
 
-    const [cartItems, setCartItems] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : null);
+    const [cartItems, setCartItems] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
     // console.log(cartItems);
 
     const removeItem = (id) => {
