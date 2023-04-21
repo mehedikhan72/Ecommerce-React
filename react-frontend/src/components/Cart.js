@@ -74,7 +74,7 @@ export default function Cart() {
                 <div>
                     <p className='normal-headings text-right'>Total: {totalPrice}</p>
                     <div className='flex justify-end mx-10'>
-                        <button className='my-btns sm:my-big-btns'>Proceed To Checkout</button>
+                        <Link to={{ pathname: '/cart/checkout'}}><button className='my-btns sm:my-big-btns'>Proceed To Checkout</button></Link>
                     </div>
 
                 </div>

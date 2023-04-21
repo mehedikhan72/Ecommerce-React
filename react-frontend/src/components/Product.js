@@ -8,6 +8,7 @@ import Size from './productpage/Size';
 import Quantity from './productpage/Quantity';
 import Loading from './utils/Loading';
 import Custom404 from './utils/Custom404';
+import { useNavigate } from 'react-router-dom';
 
 export default function Product() {
 
@@ -69,6 +70,13 @@ export default function Product() {
       setAddedToCart(false);
     }, 3000);
   }
+
+  const navigate = useNavigate();
+
+  const handleBuyNow = () => {
+    localStorage.setItem('buy_now_product', JSON.stringify([{ size: productSize, quantity: productQuantity, productData }]));
+    navigate('/checkout');
+  }
   // TODO: BUG: we made sure user cannot add to cart more than that is available. but when they add the same 
   // product to the cart again, we show the old number like.. "only 3 left", wherease it's possible that he
   // added those 3 items before. need to come up with a solution to this. 
@@ -121,7 +129,7 @@ export default function Product() {
 
             <div className='flex  mx-10 my-5 lg:mx-20 items-center'>
               <button onClick={AddToCart} className='my-btns mr-2 w-[150px]'>Add To Cart</button>
-              <button className='my-btns ml-2 w-[150px]'>Buy Now</button>
+              <button onClick={handleBuyNow} className='my-btns ml-2 w-[150px]'>Buy Now</button>
 
             </div>
           </div>

@@ -6,6 +6,15 @@ body {
     overflow-x: hidden;
 }
 
+input[type="checkbox"] {
+    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
+    -moz-transform: scale(1.5);
+    -ms-transform: scale(1.5);
+    -o-transform: scale(1.5);
+    margin: 1rem;
+}
+
 @layer base {
     .nav-list {
         @apply p-4
@@ -34,11 +43,15 @@ body {
     }
 
     .normal-headings {
-        @apply text-3xl sm:text-4xl font-bold text-center m-10
+        @apply text-2xl sm:text-3xl font-bold text-center m-10
     }
 
     .small-headings {
-        @apply text-xl sm:text-2xl font-bold text-center m-5
+        @apply text-lg sm:text-xl font-bold text-center m-5
+    }
+
+    .normal-text {
+        @apply text-base sm:text-lg font-bold text-left mx-5 my-2
     }
 
     .cut-price {
@@ -70,10 +83,14 @@ body {
     }
 
     .links-1 {
-        @apply m-1 sm:m-2 lg:m-5 text-xl font-bold text-center hover:underline
+        @apply m-1 sm:m-2 lg:m-5 text-xl font-bold text-center hover:underline hover:text-indigo-500
     }
 
     .my-input-fields {
         @apply border border-gray-500 rounded-md p-3 m-3 w-[300px]
+    }
+
+    .my-btns-2 {
+        @apply text-black border bg-white hover:bg-gray-200 border-gray-500 rounded-md px-3 py-2
     }
 }

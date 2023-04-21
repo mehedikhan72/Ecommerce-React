@@ -10,6 +10,9 @@ import Cart from './components/Cart';
 import { AuthProvider } from './components/context/AuthContext';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
+import CartCheckout from './components/CartCheckout/CartCheckout';
+import EditAccount from './components/edit/EditAccount';
+import ProductCheckout from './components/ProductCheckout/ProductCheckout';
 
 function App() {
   return (
@@ -22,6 +25,10 @@ function App() {
           <Route path="/category/:category" element={<ProductList />} />
           <Route path="/product/:slug" element={<Product />} />
           <Route path="/cart" element={<Cart />} />
+          <Route path="/cart/checkout" element={<CartCheckout />} />
+          <Route path="/account/edit" element={<EditAccount />} />
+          <Route path="/checkout" element={<ProductCheckout />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<Custom404 />} />
