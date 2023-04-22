@@ -4,8 +4,11 @@ import UserInfo from './UserInfo'
 import axios from '../axios/AxiosSetup'
 import { Link } from 'react-router-dom'
 import NoProductError from './NoProductError'
+import useWindowSize from 'react-use/lib/useWindowSize'
+import Confetti from 'react-confetti'
 
 export default function ProductCheckout() {
+    const { width, height } = useWindowSize()
 
     const [cartItems, setCartItems] = useState(localStorage.getItem('buy_now_product') ? JSON.parse(localStorage.getItem('buy_now_product')) : []);
     const [subTotal, setSubTotal] = useState(0);
@@ -104,7 +107,11 @@ export default function ProductCheckout() {
                     </div>
                 </div>}
                 {orderPlacedState && <div className='flex justify-center items-center flex-col my-20'>
-                    <p className='success-text px-10 py-6 text-3xl'>Order placed successfully.</p>
+                    <Confetti
+                        width={width}
+                        height={height}
+                    />
+                    <p className='success-text px-10 py-6 text-3xl font-bold'>Order placed successfully.</p>
                     <p className='normal-headings'>Thank you for shopping with us!</p>
                     <Link to={{ pathname: '/' }}><button className='my-btns sm:my-big-btns'>Continue Shopping</button></Link>
                 </div>}
