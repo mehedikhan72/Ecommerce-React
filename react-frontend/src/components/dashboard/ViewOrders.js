@@ -6,7 +6,7 @@ export default function AddProduct() {
 
     return (
         <div>
-            <p className='small-headings'>Previous Orders!</p>
+            <p className='normal-headings'>Previous Orders!</p>
         </div>
     )
 }

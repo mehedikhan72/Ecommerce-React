@@ -6,7 +6,7 @@ export default function AddProduct() {
 
     return (
         <div>
-            <p className='small-headings'>Manage Moderators!</p>
+            <p className='normal-headings'>Manage Moderators!</p>
         </div>
     )
 }

@@ -6,7 +6,7 @@ export default function AddProduct() {
 
     return (
         <div>
-            <p className='small-headings'>Add a Category!</p>
+            <p className='normal-headings'>Add a Category!</p>
         </div>
     )
 }
