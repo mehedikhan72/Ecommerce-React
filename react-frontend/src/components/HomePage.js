@@ -5,7 +5,6 @@ import AuthContext from './context/AuthContext'
 
 export default function HomePage() {
   const { user } = useContext(AuthContext);
-  console.log(user)
   return (
     <div>
       <ProductCategories />

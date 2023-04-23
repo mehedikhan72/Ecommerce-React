@@ -10,10 +10,12 @@ import Cart from './components/Cart';
 import { AuthProvider } from './components/context/AuthContext';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
-import CartCheckout from './components/CartCheckout/CartCheckout';
+import CartCheckout from './components/cartCheckout/CartCheckout';
 import EditAccount from './components/edit/EditAccount';
-import ProductCheckout from './components/ProductCheckout/ProductCheckout';
+import ProductCheckout from './components/productCheckout/ProductCheckout';
 import ScrollUp from './components/utils/ScrollUp';
+import AdminDashboard from './components/dashboard/AdminDashboard';
+import ModeratorDashboard from './components/dashboard/ModeratorDashboard';
 
 function App() {
   return (
@@ -29,6 +31,10 @@ function App() {
           <Route path="/cart/checkout" element={<CartCheckout />} />
           <Route path="/account/edit" element={<EditAccount />} />
           <Route path="/checkout" element={<ProductCheckout />} />
+
+          {/* Dashboards */}
+          <Route path="dashboard/admin" element={<AdminDashboard />} />
+          <Route path="dashboard/moderator" element={<ModeratorDashboard />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

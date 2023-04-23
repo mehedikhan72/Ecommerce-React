@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 
 export default function ScrollUp() {
     const [btnVisible, setBtnVisible] = useState(false);
@@ -22,7 +22,7 @@ export default function ScrollUp() {
     }
     return (
         <div>
-            {btnVisible && <button onClick={scrollUp} className='my-btns-2 fixed bottom-10 left-10 text-4xl font-bold border-2'>^</button>}
+            {btnVisible && <button onClick={scrollUp} className='hidden md:block my-btns-2 fixed bottom-10 left-10 text-4xl font-bold border-2'>^</button>}
         </div>
     )
 }
