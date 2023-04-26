@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom';
 export default function AddProduct() {
     const { user } = useContext(AuthContext);
 
+    const [error, setError] = useState(null);
+
     const [productAdded, setProductAdded] = useState(false);
     const [addedProductSlug, setAddedProductSlug] = useState(null);
 
@@ -67,12 +69,23 @@ export default function AddProduct() {
     const [currentSize, setCurrentSize] = useState('');
     const [currentAvailableQuantity, setCurrentAvailableQuantity] = useState('');
 
+    const [sizeError, setSizeError] = useState(null);
+
     const addSize = (e) => {
         e.preventDefault();
+        // check if size already exists
+        const sizeExists = sizes.find((s) => s.size === currentSize);
+        console.log(sizeExists)
+        if (sizeExists) {
+            setSizeError("Size already exists");
+            return;
+        }
+
         if (currentSize && currentAvailableQuantity) {
             setSizes([...sizes, { size: currentSize, available_quantity: parseInt(currentAvailableQuantity) }]);
             setCurrentSize('');
             setCurrentAvailableQuantity('');
+            setSizeError(null);
         }
     }
 
@@ -111,27 +124,34 @@ export default function AddProduct() {
                 setProductAdded(true);
                 setAddedProductSlug(response.data.slug);
             }
-
+            else {
+                if (images.length === 0) {
+                    setError("Please upload at least one image");
+                }
+                else if (sizes.length === 0) {
+                    setError("Please add at least one size");
+                }
+            }
         } catch (error) {
             console.log(error);
         }
     }
 
-    //TODO: Adding product primarily works but it needs a lot of work to make it more user friendly, need to add client side validation.
-    // need to make the size buttons nicer. Need to make sure that user can't add a size that already exists, need to make sure that 
-    // user can't add a size without quantity. need to make sure the numbers are positive, need to make sure that images and sizes are definitely uploaded.
-    // and other tiny shizzz.
+    // TODO: I need to come up with a theme for this app and then design the Add size buttons accordingly.
 
     return (
         <div>
             {!productAdded && <div>
                 <p className='normal-headings'>Add a product!!</p>
+                {error && <div className='flex justify-center items-center'>
+                    <p className='w-full md:w-1/2 error-text text-center'>{error}</p>
+                </div>}
                 <form onSubmit={handleSubmit}>
                     <div className='flex flex-wrap justify-center items-center'>
                         <input required type="text" className='my-input-fields w-full md:w-2/5' value={name} onChange={(e) => setName(e.target.value)} placeholder="Name of the product" />
-                        <input required type="number" className='my-input-fields w-full md:w-2/5' value={stock} onChange={(e) => setStock(e.target.value)} placeholder="Available Stocks" />
-                        <input required type='number' className='my-input-fields w-full md:w-2/5' value={regular_price} onChange={(e) => setRegular_price(e.target.value)} placeholder="Regular Price" />
-                        <input required type='number' className='my-input-fields w-full md:w-2/5' value={discount_price} onChange={(e) => setDiscount_price(e.target.value)} placeholder="Discount Price" />
+                        <input required type="number" min={0} className='my-input-fields w-full md:w-2/5' value={stock} onChange={(e) => setStock(e.target.value)} placeholder="Available Stocks" />
+                        <input required type='number' min={0} className='my-input-fields w-full md:w-2/5' value={regular_price} onChange={(e) => setRegular_price(e.target.value)} placeholder="Regular Price" />
+                        <input required type='number' min={0} className='my-input-fields w-full md:w-2/5' value={discount_price} onChange={(e) => setDiscount_price(e.target.value)} placeholder="Discount Price" />
                         <textarea className='my-input-fields w-full md:w-2/5 h-[100px] resize-none' required type="text" value={description} onChange={(e) => setDescription(e.target.value)} placeholder="Description of the product" />
                         <div className='w-full md:w-2/5 m-3'>
                             <Select
@@ -147,12 +167,15 @@ export default function AddProduct() {
                     </div>
                     <div className='md:ml-[8%]'>
                         <p className='normal-text'>Upload Images to your Product </p>
-                        <input required className='mx-5 my-2' type="file" id="images" name="images" multiple onChange={handleImageChange} />
+                        <input required className='mx-5 my-2' type="file" accept="image/*" id="images" name="images" multiple onChange={handleImageChange} />
                     </div>
                     <div className=' flex justify-center items-center flex-wrap'>
                         <input type="text" className='my-input-fields w-full md:w-2/5' value={currentSize} onChange={(e) => setCurrentSize(e.target.value)} placeholder="Size" />
                         <input type="number" className='my-input-fields w-full md:w-2/5' value={currentAvailableQuantity} onChange={(e) => setCurrentAvailableQuantity(e.target.value)} placeholder={currentSize ? `Available Quantity of ${currentSize}` : "Available Quantity"} />
                     </div>
+                    {sizeError && <div className='flex justify-center items-center'>
+                        <p className='w-full md:w-1/2 error-text text-center'>{sizeError}</p>
+                    </div>}
                     <div className='flex justify-center items-center'>
                         <button type='button' onClick={addSize} className='my-btns w-[200px]'>Add Size</button>
                     </div>
