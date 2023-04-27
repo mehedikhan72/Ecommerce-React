@@ -16,6 +16,7 @@ export default function Product() {
   const [productId, setProductId] = useState(null);
   const [productData, setProductData] = useState([]);
   const [fetchComleted, setFetchCompleted] = useState(false);
+  const [addedToWishlist, setAddedToWishlist] = useState(false);
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -30,10 +31,21 @@ export default function Product() {
       }
     }
 
+    const ifInWishlist = async () => {
+      try {
+        const response = await axios.get(`if_in_wishlist/${slug}/`)
+        setAddedToWishlist(response.data.message)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+  
     fetchProduct();
+    ifInWishlist();
 
   }, [slug, productId])
 
+  console.log(addedToWishlist)
   const [productSize, selectedProductSize] = useState(null);
   const [productQuantity, selectedProductQuantity] = useState(1);
 
@@ -77,6 +89,16 @@ export default function Product() {
     localStorage.setItem('buy_now_product', JSON.stringify([{ size: productSize, quantity: productQuantity, productData }]));
     navigate('/checkout');
   }
+
+  const changeWishList = async () => {
+    setAddedToWishlist(!addedToWishlist)
+    try {
+      const response = await axios.post(`change_wishlist/${slug}/`)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   // TODO: BUG: we made sure user cannot add to cart more than that is available. but when they add the same 
   // product to the cart again, we show the old number like.. "only 3 left", wherease it's possible that he
   // added those 3 items before. need to come up with a solution to this. 
@@ -128,9 +150,9 @@ export default function Product() {
             }
 
             <div className='flex  mx-10 my-5 lg:mx-20 items-center'>
-              <button onClick={AddToCart} className='my-btns mr-2 w-[150px]'>Add To Cart</button>
-              <button onClick={handleBuyNow} className='my-btns ml-2 w-[150px]'>Buy Now</button>
-
+              <button onClick={AddToCart} className='my-btns mr-2 w-[120px] md:w-[150px] text-[12px] md:text-base'>Add To Cart</button>
+              <button onClick={changeWishList} className='my-btns m-1 w-[70px] md:w-[150px] text-[12px] md:text-base' >{addedToWishlist ? 'Unsave' : 'Save'}</button>
+              <button onClick={handleBuyNow} className='my-btns ml-2 w-[120px] md:w-[150px] text-[12px] md:text-base'>Buy Now</button>
             </div>
           </div>
         </div>

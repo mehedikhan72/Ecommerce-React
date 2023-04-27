@@ -11,14 +11,19 @@ export default function ProductList() {
     const { category } = useParams();
     const [products, setProducts] = useState([])
     const [fetchComleted, setFetchCompleted] = useState(false);
+    const [page, setPage] = useState(1);
+    const [maxData, setMaxData] = useState(null);
 
     // Fetch using axios
     useEffect(() => {
         const fetchProducts = async () => {
+            setProducts([]);
+            setFetchCompleted(false);
             try {
-                const response = await axios.get(`category/${category}/`)
-                console.log(response)
-                setProducts(response.data.results)
+                const response = await axios.get(`category/${category}?page=${page}`)
+                // setProducts([...products, ...response.data.results]);
+                setProducts(response.data.results);
+                setMaxData(response.data.count)
                 setFetchCompleted(true)
             } catch (error) {
                 console.log(error)
@@ -26,7 +31,29 @@ export default function ProductList() {
             }
         }
         fetchProducts();
+        setPage(1);
     }, [category])
+
+
+    useEffect(() => {
+        const fetchNewProducts = async () => {
+            try {
+                const response = await axios.get(`category/${category}?page=${page}`)
+                setProducts([...products, ...response.data.results]);
+            } catch (error) {
+                console.log(error)
+                setFetchCompleted(true)
+            }
+        }
+        fetchNewProducts();
+    }, [page])
+
+    console.log(category)
+    console.log(page);
+
+    const seeMoreClicked = () => {
+        setPage(page + 1);
+    }
 
     return (
         <div>
@@ -56,6 +83,9 @@ export default function ProductList() {
                         </Link>
                     ))}
                 </div>
+                {products.length < maxData && <div className='m-10 text-center'>
+                    <button onClick={seeMoreClicked} className='my-btns'>See more...</button>
+                </div>}
             </div>}
         </div>
     )

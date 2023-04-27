@@ -6,16 +6,22 @@ import Loading from '../utils/Loading';
 import { Link } from 'react-router-dom';
 
 export default function SearchResults() {
+    // TODO: Add pagination (load more) for search results
+
     const [searchParams] = useSearchParams();
     const query = searchParams.get("query");
     const [products, setProducts] = useState([]);
     const [fetchComleted, setFetchCompleted] = useState(false);
+    const [page, setPage] = useState(1);
+    const [maxData, setMaxData] = useState(null);
 
     useEffect(() => {
         const fetchSearchResults = async () => {
             try {
-                const response = await axios.get(`search?query=${query}`)
-                setProducts(response.data.results)
+                const response = await axios.get(`search?query=${query}&page=${page}`)
+                console.log(response.data.results)
+                setProducts([...products, ...response.data.results]);
+                setMaxData(response.data.count)
             } catch (error) {
                 console.log(error)
             }
@@ -24,7 +30,16 @@ export default function SearchResults() {
 
         fetchSearchResults();
 
+    }, [query, page])
+
+    useEffect(() => {
+        setPage(1);
+        setProducts([]);
     }, [query])
+
+    const seeMoreClicked = () => {
+        setPage(page + 1);
+    }
 
 
     return (
@@ -60,7 +75,10 @@ export default function SearchResults() {
                         </Link>
                     ))}
                 </div>
+                {products.length < maxData && <div className='m-10 text-center'>
+                    <button onClick={seeMoreClicked} className='my-btns'>See more...</button>
                 </div>}
+            </div>}
 
         </div>
     )

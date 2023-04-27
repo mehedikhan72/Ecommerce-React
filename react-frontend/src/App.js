@@ -17,6 +17,7 @@ import ScrollUp from './components/utils/ScrollUp';
 import AdminDashboard from './components/dashboard/AdminDashboard';
 import ModeratorDashboard from './components/dashboard/ModeratorDashboard';
 import SearchResults from './components/search/SearchResults';
+import SavedProducts from './components/SavedProducts';
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path="/checkout" element={<ProductCheckout />} />
 
           <Route path="/search" element={<SearchResults />}/>
+          <Route path="/saved-products" element={<SavedProducts />} />
 
           {/* Dashboards */}
           <Route path="dashboard/admin" element={<AdminDashboard />} />

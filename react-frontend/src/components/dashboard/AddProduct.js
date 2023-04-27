@@ -77,7 +77,7 @@ export default function AddProduct() {
         const sizeExists = sizes.find((s) => s.size === currentSize);
         console.log(sizeExists)
         if (sizeExists) {
-            setSizeError("Size already exists");
+            setSizeError("Size already exists!");
             return;
         }
 
@@ -86,6 +86,9 @@ export default function AddProduct() {
             setCurrentSize('');
             setCurrentAvailableQuantity('');
             setSizeError(null);
+        }
+        else {
+            setSizeError("Please enter a size and available quantity!");
         }
     }
 
@@ -126,10 +129,10 @@ export default function AddProduct() {
             }
             else {
                 if (images.length === 0) {
-                    setError("Please upload at least one image");
+                    setError("Please upload at least one image!");
                 }
                 else if (sizes.length === 0) {
-                    setError("Please add at least one size");
+                    setError("Please add at least one size!");
                 }
             }
         } catch (error) {

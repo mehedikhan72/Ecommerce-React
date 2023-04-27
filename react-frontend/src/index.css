@@ -27,11 +27,11 @@ input[type="checkbox"] {
     } */
 
     .my-btns {
-        @apply font-bold text-white border bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-5 py-2
+        @apply text-center font-bold text-white border bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-4 py-2
     }
 
     .my-big-btns {
-        @apply font-bold text-white border text-2xl bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-5 py-5
+        @apply text-center font-bold text-white border text-2xl bg-indigo-600 border-indigo-500 hover:bg-indigo-500 rounded-md px-5 py-5
     }
 
     .each-item {
@@ -75,7 +75,7 @@ input[type="checkbox"] {
     }
 
     .error-text {
-        @apply bg-red-600 border text-white border-white px-5 py-2 m-2 rounded-md
+        @apply font-bold bg-red-600 border text-white border-white px-5 py-2 m-2 rounded-md
     }
 
     .alert-text {
@@ -91,10 +91,10 @@ input[type="checkbox"] {
     }
 
     .my-btns-2 {
-        @apply text-black border bg-white hover:bg-gray-200 border-gray-500 rounded-md px-3 py-2
+        @apply text-center text-black border bg-white hover:bg-gray-200 border-gray-500 rounded-md px-3 py-2
     }
 
     .my-btns-3 {
-        @apply bg-black text-white px-4 py-2 rounded-md hover:bg-gray-700 cursor-pointer font-bold
+        @apply text-center bg-black text-white px-4 py-2 rounded-md hover:bg-gray-700 cursor-pointer font-bold
     }
 }
