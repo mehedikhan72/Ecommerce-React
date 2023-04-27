@@ -22,7 +22,7 @@ export default function ScrollUp() {
     }
     return (
         <div>
-            {btnVisible && <button onClick={scrollUp} className='hidden md:block my-btns-2 fixed bottom-10 left-10 text-4xl font-bold border-2'>^</button>}
+            {btnVisible && <button onClick={scrollUp} className='hidden md:block bg-black hover:bg-gray-700 rounded-md px-2 py-1 text-white fixed bottom-10 left-10 text-4xl font-bold border-2'>^</button>}
         </div>
     )
 }

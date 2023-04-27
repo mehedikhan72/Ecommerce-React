@@ -137,7 +137,12 @@ export default function AddProduct() {
         }
     }
 
-    // TODO: I need to come up with a theme for this app and then design the Add size buttons accordingly.
+    // TODO: Add remove images btn.
+
+    const removeImages = () => {
+        setImages([]);
+        document.getElementById('images').value = null;
+    }
 
     return (
         <div>
@@ -165,10 +170,7 @@ export default function AddProduct() {
                             />
                         </div>
                     </div>
-                    <div className='md:ml-[8%]'>
-                        <p className='normal-text'>Upload Images to your Product </p>
-                        <input required className='mx-5 my-2' type="file" accept="image/*" id="images" name="images" multiple onChange={handleImageChange} />
-                    </div>
+
                     <div className=' flex justify-center items-center flex-wrap'>
                         <input type="text" className='my-input-fields w-full md:w-2/5' value={currentSize} onChange={(e) => setCurrentSize(e.target.value)} placeholder="Size" />
                         <input type="number" className='my-input-fields w-full md:w-2/5' value={currentAvailableQuantity} onChange={(e) => setCurrentAvailableQuantity(e.target.value)} placeholder={currentSize ? `Available Quantity of ${currentSize}` : "Available Quantity"} />
@@ -177,22 +179,35 @@ export default function AddProduct() {
                         <p className='w-full md:w-1/2 error-text text-center'>{sizeError}</p>
                     </div>}
                     <div className='flex justify-center items-center'>
-                        <button type='button' onClick={addSize} className='my-btns w-[200px]'>Add Size</button>
+                        <button type='button' onClick={addSize} className='my-btns-3 w-[200px]'>Add Size</button>
                     </div>
                     {sizes.length > 0 &&
                         <div className='flex justify-center items-center'>
                             <div className='flex flex-wrap justify-center items-center w-[82%] border border-gray-500 p-5 m-4 rounded-md'>
                                 {sizes.map((size) => (
                                     <div key={size.id}>
-                                        <div className='flex justify-between items-center border border-gray-500 px-5 py-2 m-3 bg-gray-300 rounded-md'>
-                                            <p className='normal-text'>{size.size} - {size.available_quantity}</p>
-                                            <button type='button' onClick={() => removeSize(size.size)} className='my-btns-2 bg-gray-400'>X</button>
+                                        <div className='flex justify-between items-center border border-gray-500 px-3 py-2 m-3 rounded-md'>
+                                            <p className='normal-text'>{size.size} - {size.available_quantity} pieces</p>
+                                            <button type='button' onClick={() => removeSize(size.size)} className='bg-black text-white px-2 py-1 rounded-md hover:bg-gray-700 cursor-pointer'>X</button>
                                         </div>
                                     </div>
 
                                 ))}
                             </div>
                         </div>}
+
+                    <div className='md:ml-[8%]'>
+                        <p className='normal-text'>Upload Images to your Product </p>
+                        <div className='flex justify-start items-center'>
+                            <label for="images">
+                                <div className='my-btns-3 ml-5 my-2'>Upload Images</div>
+                            </label>
+                            <input required className='hidden font-bold mx-5 my-2 w-[250px]' type="file" accept="image/*" id="images" name="images" multiple onChange={handleImageChange} />
+                            {images.length === 0 && <p className='normal-text'>No file selected</p>}
+                            {images.length > 0 && <p className='normal-text'>{images.length} selected</p>}
+                            {images.length > 0 && <button onClick={removeImages} type='button' className='bg-black text-white px-2 py-1 rounded-md hover:bg-gray-700 cursor-pointer'>X</button>}
+                        </div>
+                    </div>
 
                     <div className='flex justify-center items-center m-4'>
                         <button type='submit' className='my-big-btns w-[200px]'>Add Product</button>

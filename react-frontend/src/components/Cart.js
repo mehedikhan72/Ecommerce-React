@@ -66,8 +66,8 @@ export default function Cart() {
                             </div>
                         </Link>
                         <div>
-                            <button onClick={() => removeItem(item.id)} className="absolute -translate-x-0 translate-y-[-50%] right-7 top-8 sm:right-10 sm:top-1/3 text-2xl rounded-full py-1 px-2 bg-black text-white cursor-pointer "><i class='bx bx-trash'></i></button>
-                            <button className="absolute -translate-x-0 translate-y-[-50%] right-7 top-20 sm:right-10 sm:top-2/3 text-2xl rounded-full py-1 px-2 bg-black text-white cursor-pointer "><i class='bx bx-message-alt-edit'></i></button>
+                            <button onClick={() => removeItem(item.id)} className="absolute -translate-x-0 translate-y-[-50%] right-7 top-8 sm:right-10 sm:top-1/3 text-2xl rounded-full py-1 px-2 bg-black hover:bg-gray-700 text-white cursor-pointer "><i class='bx bx-trash'></i></button>
+                            <button className="absolute -translate-x-0 translate-y-[-50%] right-7 top-20 sm:right-10 sm:top-2/3 text-2xl rounded-full py-1 px-2 bg-black hover:bg-gray-700 text-white cursor-pointer "><i class='bx bx-message-alt-edit'></i></button>
                         </div>
                     </div>
                 ))}
