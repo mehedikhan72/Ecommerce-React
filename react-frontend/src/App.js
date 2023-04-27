@@ -1,6 +1,6 @@
 import './App.css';
 import Navbar from './components/Navbar';
-import Searchbox from './components/Searchbox';
+import Searchbox from './components/search/Searchbox';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import HomePage from './components/HomePage';
 import Custom404 from './components/utils/Custom404';
@@ -16,6 +16,7 @@ import ProductCheckout from './components/productCheckout/ProductCheckout';
 import ScrollUp from './components/utils/ScrollUp';
 import AdminDashboard from './components/dashboard/AdminDashboard';
 import ModeratorDashboard from './components/dashboard/ModeratorDashboard';
+import SearchResults from './components/search/SearchResults';
 
 function App() {
   return (
@@ -31,6 +32,8 @@ function App() {
           <Route path="/cart/checkout" element={<CartCheckout />} />
           <Route path="/account/edit" element={<EditAccount />} />
           <Route path="/checkout" element={<ProductCheckout />} />
+
+          <Route path="/search" element={<SearchResults />}/>
 
           {/* Dashboards */}
           <Route path="dashboard/admin" element={<AdminDashboard />} />

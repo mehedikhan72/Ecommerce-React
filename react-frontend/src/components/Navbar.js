@@ -2,6 +2,7 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { useState, useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import AuthContext from './context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Navbar() {
