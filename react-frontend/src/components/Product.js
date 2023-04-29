@@ -9,6 +9,7 @@ import Quantity from './productpage/Quantity';
 import Loading from './utils/Loading';
 import Custom404 from './utils/Custom404';
 import { useNavigate } from 'react-router-dom';
+import QnA from './productpage/QnA';
 
 export default function Product() {
 
@@ -39,13 +40,12 @@ export default function Product() {
         console.log(error)
       }
     }
-  
+
     fetchProduct();
     ifInWishlist();
 
   }, [slug, productId])
 
-  console.log(addedToWishlist)
   const [productSize, selectedProductSize] = useState(null);
   const [productQuantity, selectedProductQuantity] = useState(1);
 
@@ -156,10 +156,14 @@ export default function Product() {
             </div>
           </div>
         </div>
-        <div className='my-20'>
-          <p className='normal-headings'>Product Description</p>
-          <p className='small-headings'>{productData.description}</p>
+        <div className='my-20 mx-10 md:mx-20'>
+          <p className='normal-headings text-left mx-0'>Product Description</p>
+          <p className='small-headings text-left mx-0'>{productData.description}</p>
         </div>
+        <QnA slug={slug} />
+
+
+
         <SimilarProducts slug={productData.category.slug} />
 
       </div>}

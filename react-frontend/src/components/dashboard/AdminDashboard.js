@@ -7,6 +7,7 @@ import AddCategory from './AddCategory';
 import ViewOrders from './ViewOrders';
 import ManageModerators from './ManageModerators';
 import axios from '../axios/AxiosSetup';
+import UnansweredQuestions from './UnansweredQuestions';
 
 export default function AdminDashboard() {
     const { user } = useContext(AuthContext);
@@ -14,6 +15,7 @@ export default function AdminDashboard() {
     const [addCategoryViewOn, setAddCategoryViewOn] = useState(false);
     const [viewOrdersViewOn, setViewOrdersViewOn] = useState(true);
     const [manageModeratorsViewOn, setManageModeratorsViewOn] = useState(false);
+    const [unansweredQuestionsViewOn, setUnansweredQuestionsViewOn] = useState(false);
 
     return (
         <div>
@@ -25,12 +27,14 @@ export default function AdminDashboard() {
                         setAddCategoryViewOn={setAddCategoryViewOn}
                         setViewOrdersViewOn={setViewOrdersViewOn}
                         setManageModeratorsViewOn={setManageModeratorsViewOn}
+                        setUnansweredQuestionsViewOn={setUnansweredQuestionsViewOn}
                     />
                     <div className='m-10'>
                         {addProductViewOn && <AddProduct />}
                         {addCategoryViewOn && <AddCategory />}
                         {viewOrdersViewOn && <ViewOrders />}
                         {manageModeratorsViewOn && <ManageModerators />}
+                        {unansweredQuestionsViewOn && <UnansweredQuestions />}
                     </div>
                 </div>}
             {(!user || !user.is_admin) &&

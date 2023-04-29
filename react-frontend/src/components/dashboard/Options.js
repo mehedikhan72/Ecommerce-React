@@ -9,6 +9,7 @@ export default function Options(props) {
         props.setAddProductViewOn(false)
         props.setAddCategoryViewOn(false)
         props.setManageModeratorsViewOn(false)
+        props.setUnansweredQuestionsViewOn(false)
     }
 
     const enableAddProduct = () => {
@@ -16,6 +17,7 @@ export default function Options(props) {
         props.setAddProductViewOn(true)
         props.setAddCategoryViewOn(false)
         props.setManageModeratorsViewOn(false)
+        props.setUnansweredQuestionsViewOn(false)
     }
 
     const enableAddCategory = () => {
@@ -23,6 +25,7 @@ export default function Options(props) {
         props.setAddProductViewOn(false)
         props.setAddCategoryViewOn(true)
         props.setManageModeratorsViewOn(false)
+        props.setUnansweredQuestionsViewOn(false)
     }
 
     const enableManageModerators = () => {
@@ -30,6 +33,15 @@ export default function Options(props) {
         props.setAddProductViewOn(false)
         props.setAddCategoryViewOn(false)
         props.setManageModeratorsViewOn(true)
+        props.setUnansweredQuestionsViewOn(false)
+    }
+
+    const enableUnansweredQuestions = () => {
+        props.setViewOrdersViewOn(false)
+        props.setAddProductViewOn(false)
+        props.setAddCategoryViewOn(false)
+        props.setManageModeratorsViewOn(false)
+        props.setUnansweredQuestionsViewOn(true)
     }
 
     return (
@@ -38,6 +50,7 @@ export default function Options(props) {
             <button onClick={enableAddProduct} className='my-btns m-3 w-[200px]'>Add Product</button>
             <button onClick={enableAddCategory} className='my-btns m-3 w-[200px]'>Add Category</button>
             {user && user.is_admin && <button onClick={enableManageModerators} className='my-btns m-3 w-[200px]'>Manage Moderators</button>}
+            <button onClick={enableUnansweredQuestions} className='my-btns m-3 w-[200px]'>Questions</button>
         </div>
     )
 }
