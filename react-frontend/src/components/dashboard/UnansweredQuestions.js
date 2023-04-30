@@ -1,9 +1,11 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from '../axios/AxiosSetup'
 import { Link } from 'react-router-dom';
+import Loading from '../utils/Loading'
 
 export default function UnansweredQuestions() {
     const [questions, setQuestions] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const fetchQuestions = async () => {
@@ -11,6 +13,7 @@ export default function UnansweredQuestions() {
                 const res = await axios.get('unanswered_questions/');
                 console.log(res.data)
                 setQuestions(res.data.results);
+                setLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -20,6 +23,7 @@ export default function UnansweredQuestions() {
     }, [])
     return (
         <div>
+            {loading && <Loading />}
             {questions.length > 0 && <div>
                 <p className='normal-headings'>Unanswered Questions!</p>
                 {questions.map((question) => (
@@ -32,12 +36,11 @@ export default function UnansweredQuestions() {
                     </div>
                 ))}
             </div>}
-            {questions.length === 0 && <div>
+            {!loading && questions.length === 0 && <div>
                 <div className='flex justify-center items-center'>
                     <p className='small-headings'>No new questions. Check again later!</p>
                 </div>
-                </div>}
-
+            </div>}
         </div>
     )
 }

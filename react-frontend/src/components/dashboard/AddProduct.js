@@ -3,11 +3,13 @@ import AuthContext from '../context/AuthContext';
 import Select from 'react-dropdown-select'
 import axios from '../axios/AxiosSetup'
 import { Link } from 'react-router-dom';
+import Loading from '../utils/Loading';
 
 export default function AddProduct() {
     const { user } = useContext(AuthContext);
 
     const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const [productAdded, setProductAdded] = useState(false);
     const [addedProductSlug, setAddedProductSlug] = useState(null);
@@ -20,6 +22,7 @@ export default function AddProduct() {
             try {
                 const response = await axios.get('get_categories/');
                 setCategories(response.data.results);
+                setLoading(false);
             }
             catch (error) {
                 console.log(error);
@@ -58,7 +61,6 @@ export default function AddProduct() {
     const uploadImages = async (id) => {
         try {
             const response = await axios.post(`upload_images/${id}/`, formData);
-            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -75,7 +77,6 @@ export default function AddProduct() {
         e.preventDefault();
         // check if size already exists
         const sizeExists = sizes.find((s) => s.size === currentSize);
-        console.log(sizeExists)
         if (sizeExists) {
             setSizeError("Size already exists!");
             return;
@@ -100,7 +101,6 @@ export default function AddProduct() {
     const uploadSizes = async (id) => {
         try {
             const response = await axios.post(`add_product_sizes/${id}/`, sizes);
-            console.log(response.data);
         } catch (error) {
             console.log(error);
         }
@@ -109,8 +109,8 @@ export default function AddProduct() {
     // Form submission
 
     const handleSubmit = async (e) => {
+        console.log("submitted")
         e.preventDefault();
-
         const productData = {
             name,
             description,
@@ -120,12 +120,15 @@ export default function AddProduct() {
         }
 
         try {
+            console.log(images.length);
             if (images.length > 0 && sizes.length > 0) {
+                setLoading(true);
                 const response = await axios.post(`category/${category[0].slug}/`, productData);
                 uploadImages(response.data.id);
                 uploadSizes(response.data.id);
                 setProductAdded(true);
                 setAddedProductSlug(response.data.slug);
+                setLoading(false);
             }
             else {
                 if (images.length === 0) {
@@ -140,20 +143,18 @@ export default function AddProduct() {
         }
     }
 
-    // TODO: Add remove images btn.
+    // TOTO: Make sure the slug(product name is unique)
 
     const removeImages = () => {
         setImages([]);
         document.getElementById('images').value = null;
     }
-
+    console.log(error);
     return (
         <div>
+            {loading && <Loading />}
             {!productAdded && <div>
                 <p className='normal-headings'>Add a product!!</p>
-                {error && <div className='flex justify-center items-center'>
-                    <p className='w-full md:w-1/2 error-text text-center'>{error}</p>
-                </div>}
                 <form onSubmit={handleSubmit}>
                     <div className='flex flex-wrap justify-center items-center'>
                         <input required type="text" className='my-input-fields w-full md:w-2/5' value={name} onChange={(e) => setName(e.target.value)} placeholder="Name of the product" />
@@ -205,12 +206,16 @@ export default function AddProduct() {
                             <label for="images">
                                 <div className='my-btns-3 ml-5 my-2'>Upload Images</div>
                             </label>
-                            <input required className='hidden font-bold mx-5 my-2 w-[250px]' type="file" accept="image/*" id="images" name="images" multiple onChange={handleImageChange} />
+                            <input className='hidden font-bold mx-5 my-2 w-[250px]' type="file" accept="image/*" id="images" name="images" multiple onChange={handleImageChange} />
                             {images.length === 0 && <p className='normal-text'>No file selected</p>}
                             {images.length > 0 && <p className='normal-text'>{images.length} selected</p>}
                             {images.length > 0 && <button onClick={removeImages} type='button' className='bg-black text-white px-2 py-1 rounded-md hover:bg-gray-700 cursor-pointer'>X</button>}
                         </div>
                     </div>
+
+                    {error && <div className='flex justify-center items-center'>
+                        <p className='w-full md:w-1/2 error-text text-center'>{error}</p>
+                    </div>}
 
                     <div className='flex justify-center items-center m-4'>
                         <button type='submit' className='my-big-btns w-[200px]'>Add Product</button>

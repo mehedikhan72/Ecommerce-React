@@ -5,6 +5,7 @@ import axios from '../axios/AxiosSetup';
 import { Link } from 'react-router-dom';
 import Custom404 from '../utils/Custom404';
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import Loading from '../utils/Loading';
 
 export default function OrderDetails() {
     const { user } = useContext(AuthContext);
@@ -15,6 +16,7 @@ export default function OrderDetails() {
     const [orderData, setOrderData] = useState({});
     const [totalBill, setTotalBill] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
+    const [loading, setLoading] = useState(true);
 
     const [formattedDate, setFormattedDate] = useState('');
 
@@ -27,6 +29,7 @@ export default function OrderDetails() {
                 const res = await axios.get(`get_order_items/${id}/`);
                 setOrderItems(res.data);
                 setOrderData(res.data[0].order);
+                setLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -73,20 +76,22 @@ export default function OrderDetails() {
     console.log(statusValue)
 
     const handleStatusChange = async () => {
+        setLoading(true);
         if (statusValue) {
             try {
                 const res = await axios.post(`change_order_status/${id}/`, { status: statusValue });
                 setStatusValueChanged(!statusValueChanged);
+                setLoading(false);
             } catch (err) {
                 console.log(err);
             }
         }
     }
 
-
     return (
         <div>
-            {orderItems.length === 0 && <Custom404 />}
+            {loading && <Loading />}
+            {!loading && orderItems.length === 0 && <Custom404 />}
             {!user || (!user.is_admin && !user.is_moderator) && <div>
                 <div className='flex justify-center items-center'>
                     <p className='error-text text-center w-3/4'>You are not authorized to view this page.</p>
