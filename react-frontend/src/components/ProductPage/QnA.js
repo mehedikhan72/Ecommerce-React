@@ -38,7 +38,7 @@ export default function QnA(props) {
             }
         }
         fetchNewQnA();
-    }, [page])
+    }, [page]);
 
     const [question, setQuestion] = useState('');
     const [questionAdded, setQuestionAdded] = useState(false);
@@ -79,6 +79,9 @@ export default function QnA(props) {
             setSelectedQuestion(null);
             setSelectedQuestionId(null);
             setAnswerAdded(true);
+            setTimeout(() => {
+                setAnswerAdded(false);
+            }, 3000);
         } catch (err) {
             console.log(err);
         }
@@ -108,10 +111,16 @@ export default function QnA(props) {
                     {qna.length > 0 && qna.map((qna) => (
                         <div key={qna.id} className='my-5'>
                             {<div>
+                                <div className='flex justify-start'>
+                                    <p className='normal-text ml-0 mr-2'>{qna.user.first_name} {qna.user.last_name}</p>
+                                    <p className='normal-text ml-0 font-normal'>asks</p>
+                                </div>
+
                                 <div className='flex justify-start items-center'>
                                     <p className='font-bold border-1 rounded-md px-2 text-bold p-1 mx-1 mr-2 bg-black text-white hover:bg-gray-500'>Q</p>
                                     <p className='ml-0 small-headings text-left'>{qna.question}</p>
                                     {!qna.answer && <button onClick={() => questionSelectedToAnswer(qna.id, qna.question)} className='my-small-btns'>Answer</button>}
+                                    {qna.answer && <button onClick={() => questionSelectedToAnswer(qna.id, qna.question)} className='my-small-btns'>Edit Answer</button>}
                                 </div>
                                 <div className='flex justify-start items-center'>
                                     <p className='font-bold border-1 rounded-md px-2 text-bold p-1 mx-1 mr-2 bg-black text-white hover:bg-gray-500'>A</p>
@@ -162,7 +171,7 @@ export default function QnA(props) {
                 </div>}
             </div>
             {questionAdded && <p className='fixed success-text text-center w-[250px] bottom-5 right-5 animate-bounce'>Question sent. Hang tight!</p>}
-            {answerAdded && <p className='fixed success-text text-center w-[250px] bottom-5 right-5 animate-bounce'>Answer saved! Continue!</p>}
+            {answerAdded && <p className='fixed success-text text-center w-[250px] bottom-5 right-5 animate-bounce'>Answer saved! Refresh to see changes!</p>}
         </div>
     )
 }
