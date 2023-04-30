@@ -1,14 +1,41 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import AuthContext from '../context/AuthContext'
+import { Link } from 'react-router-dom';
+import Options from './Options';
+import AddProduct from './AddProduct';
+import AddCategory from './AddCategory';
+import ViewOrders from './ViewOrders';
+import ManageModerators from './ManageModerators';
+import axios from '../axios/AxiosSetup';
+import UnansweredQuestions from './UnansweredQuestions';
 
 export default function ModeratorDashboard() {
     const { user } = useContext(AuthContext);
+    const [addProductViewOn, setAddProductViewOn] = useState(false);
+    const [addCategoryViewOn, setAddCategoryViewOn] = useState(false);
+    const [viewOrdersViewOn, setViewOrdersViewOn] = useState(true);
+    const [manageModeratorsViewOn, setManageModeratorsViewOn] = useState(false);
+    const [unansweredQuestionsViewOn, setUnansweredQuestionsViewOn] = useState(false);
+
     return (
         <div>
             {user && (user.is_moderator || user.is_admin) &&
                 <div>
-                    <p className='normal-headings'>Welcome to moderator dashboard!</p>
+                    <p className='normal-headings'>Welcome to moderator dashboard, {user.first_name}!</p>
+                    <Options
+                        setAddProductViewOn={setAddProductViewOn}
+                        setAddCategoryViewOn={setAddCategoryViewOn}
+                        setViewOrdersViewOn={setViewOrdersViewOn}
+                        setManageModeratorsViewOn={setManageModeratorsViewOn}
+                        setUnansweredQuestionsViewOn={setUnansweredQuestionsViewOn}
+                    />
+                    <div className='m-10'>
+                        {addProductViewOn && <AddProduct />}
+                        {addCategoryViewOn && <AddCategory />}
+                        {viewOrdersViewOn && <ViewOrders />}
+                        {manageModeratorsViewOn && <ManageModerators />}
+                        {unansweredQuestionsViewOn && <UnansweredQuestions />}
+                    </div>
                 </div>}
             {(!user || (!user.is_moderator && !user.is_admin)) &&
                 <div >
@@ -22,3 +49,4 @@ export default function ModeratorDashboard() {
         </div>
     )
 }
+

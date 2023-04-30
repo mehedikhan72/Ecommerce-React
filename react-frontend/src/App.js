@@ -18,6 +18,7 @@ import AdminDashboard from './components/dashboard/AdminDashboard';
 import ModeratorDashboard from './components/dashboard/ModeratorDashboard';
 import SearchResults from './components/search/SearchResults';
 import SavedProducts from './components/SavedProducts';
+import OrderDetails from './components/dashboard/OrderDetails';
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           {/* Dashboards */}
           <Route path="dashboard/admin" element={<AdminDashboard />} />
           <Route path="dashboard/moderator" element={<ModeratorDashboard />} />
+          <Route path="order/:id" element={<OrderDetails />} />
 
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />

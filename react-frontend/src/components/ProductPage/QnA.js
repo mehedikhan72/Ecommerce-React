@@ -138,7 +138,7 @@ export default function QnA(props) {
                         <button onClick={seeMoreClicked} className='my-small-btns'>See more...</button>
                     </div>}
                 </div>
-                {!user.is_admin && !user.id_moderator && <div className='w-full md:w-1/2 flex flex-col justify-center'>
+                {!user.is_admin && !user.is_moderator && <div className='w-full md:w-1/2 flex flex-col justify-center'>
                     <p className='small-headings'>Ask a question!</p>
                     <div className='flex justify-center items-center'>
                         {user && <p className='alert-text text-center w-5/6'>We will notify you with an email as soon as your question is answered.</p>}

@@ -46,9 +46,10 @@ export default function ProductCheckout() {
     }, [cartItems, info, shipping])
 
     const [orderPlacedState, setOrderPlacedState] = useState(false);
+    console.log(order);
 
     const orderPlaced = async (e) => {
-        console.log(order)
+
         e.preventDefault();
         try {
             const response = await axios.post('place_order/', order);

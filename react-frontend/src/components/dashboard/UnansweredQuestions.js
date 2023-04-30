@@ -20,8 +20,8 @@ export default function UnansweredQuestions() {
     }, [])
     return (
         <div>
-            <p className='normal-headings'>Unanswered Questions!</p>
-            <div>
+            {questions.length > 0 && <div>
+                <p className='normal-headings'>Unanswered Questions!</p>
                 {questions.map((question) => (
                     <div key={question.id} >
                         <div className='flex justify-between items-center mx-5 md:mx-20 xl:mx-40 my-2'>
@@ -30,9 +30,13 @@ export default function UnansweredQuestions() {
                         </div>
                         <hr className='mx-5 md:mx-20 xl:mx-40 border-black' />
                     </div>
-
                 ))}
-            </div>
+            </div>}
+            {questions.length === 0 && <div>
+                <div className='flex justify-center items-center'>
+                    <p className='small-headings'>No new questions. Check again later!</p>
+                </div>
+                </div>}
 
         </div>
     )
