@@ -19,10 +19,12 @@ import ModeratorDashboard from './components/dashboard/ModeratorDashboard';
 import SearchResults from './components/search/SearchResults';
 import SavedProducts from './components/SavedProducts';
 import OrderDetails from './components/dashboard/OrderDetails';
+import UserOrderList from './components/trackOrder/UserOrderList';
+import UserOrderDetail from './components/trackOrder/UserOrderDetail';
 
 function App() {
   return (
-    <div className="App">
+    <div className="App overflow-x-hidden">
       <AuthProvider >
         <Navbar />
         <Searchbox />
@@ -35,7 +37,7 @@ function App() {
           <Route path="/account/edit" element={<EditAccount />} />
           <Route path="/checkout" element={<ProductCheckout />} />
 
-          <Route path="/search" element={<SearchResults />}/>
+          <Route path="/search" element={<SearchResults />} />
           <Route path="/saved-products" element={<SavedProducts />} />
 
           {/* Dashboards */}
@@ -46,6 +48,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<Custom404 />} />
+
+          <Route path=":username/orders/" element={<UserOrderList />} />
+          <Route path=":username/order/:id" element={<UserOrderDetail />} />
         </Routes>
         <ScrollUp />
       </AuthProvider>

@@ -4,13 +4,11 @@ import { useParams } from 'react-router-dom';
 import axios from '../axios/AxiosSetup';
 import { Link } from 'react-router-dom';
 import Custom404 from '../utils/Custom404';
-import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 import Loading from '../utils/Loading';
 
-export default function OrderDetails() {
+export default function UserOrderDetails() {
     const { user } = useContext(AuthContext);
     const { id } = useParams();
-
 
     const [orderItems, setOrderItems] = useState([]);
     const [orderData, setOrderData] = useState({});
@@ -19,9 +17,6 @@ export default function OrderDetails() {
     const [loading, setLoading] = useState(true);
 
     const [formattedDate, setFormattedDate] = useState('');
-
-    const [statusValue, setStatusValue] = useState();
-    const [statusValueChanged, setStatusValueChanged] = useState(false);
 
     useEffect(() => {
         const getOrderItems = async () => {
@@ -37,7 +32,7 @@ export default function OrderDetails() {
 
         getOrderItems();
 
-    }, [statusValueChanged]);
+    }, []);
 
     useEffect(() => {
         let total = 0;
@@ -72,22 +67,6 @@ export default function OrderDetails() {
 
     }, [orderData]);
 
-
-    console.log(statusValue)
-
-    const handleStatusChange = async () => {
-        setLoading(true);
-        if (statusValue) {
-            try {
-                const res = await axios.post(`change_order_status/${id}/`, { status: statusValue });
-                setStatusValueChanged(!statusValueChanged);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        setLoading(false);
-    }
-
     return (
         <div>
             {loading && <Loading />}
@@ -98,10 +77,10 @@ export default function OrderDetails() {
                 </div>
             </div>}
             {user && (user.is_admin || user.is_moderator) && orderItems.length !== 0 && <div>
-                <p className='normal-headings'>Order Details</p>
+                <p className='normal-headings'>Track my order!</p>
                 <div className='mx-2 md:mx-5 p-5 flex justify-between items-center'>
                     <div className='flex justify-start items-center'>
-                        <p className='small-headings text-left ml-0 mr-10'>{orderData.first_name} {orderData.last_name} ordered {totalItems} items on {formattedDate}.</p>
+                        <p className='small-headings text-left ml-0 mr-10'>You ordered {totalItems} items on {formattedDate}.</p>
                         <p className={orderData.status === 'Delivered' ? 'hidden md:block success-text scale-150' : 'hidden md:block alert-text scale-150'}>{orderData.status}</p>
                     </div>
 
@@ -109,7 +88,7 @@ export default function OrderDetails() {
                 </div>
 
                 <div className='mx-2 md:mx-5 p-5'>
-                    <p className='normal-headings ml-0 text-left m-0 mb-2'>Buyer Information</p>
+                    <p className='normal-headings ml-0 text-left m-0 mb-2'>My Information</p>
 
                     <div className='grid grid-cols-1 md:grid-cols-2'>
                         <p className='normal-text ml-0'>First Name: {orderData.first_name}</p>
@@ -157,24 +136,6 @@ export default function OrderDetails() {
                 <div className='flex justify-start items-center mx-2 md:mx-5 p-5'>
                     <p className='normal-headings ml-0 text-left m-0 mr-10'>Order Status: </p>
                     <p className={orderData.status === 'Delivered' ? 'success-text scale-150' : 'alert-text scale-150'}>{orderData.status}</p>
-                </div>
-
-                <div className='mx-2 md:mx-5 p-5'>
-                    <p className='small-headings text-left m-0'>Change Order Status</p>
-                    <FormControl>
-                        <RadioGroup
-                            aria-labelledby="demo-controlled-radio-buttons-group"
-                            name="controlled-radio-buttons-group"
-                            value={statusValue}
-                            onChange={(e) => setStatusValue(e.target.value)}
-                        >
-                            <FormControlLabel value="Shipped" control={<Radio />} label="Shipped" />
-                            <FormControlLabel value="Delivered" control={<Radio />} label="Delivered" />
-                        </RadioGroup>
-                    </FormControl>
-                </div>
-                <div className='mx-2 md:mx-5 px-5'>
-                    <button onClick={handleStatusChange} className='my-0 my-btns'>Change</button>
                 </div>
 
                 <div className='my-20' />

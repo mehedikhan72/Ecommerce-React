@@ -8,21 +8,28 @@ export default function AddProduct() {
     const { user } = useContext(AuthContext);
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [maxData, setMaxData] = useState(null);
 
     useEffect(() => {
         const getOrders = async () => {
+            setLoading(true);
             try {
-                const res = await axios.get('orders/');
-                setOrders(res.data.results);
+                const res = await axios.get(`orders?page=${page}`);
+                setOrders([...orders, ...res.data.results])
+                setMaxData(res.data.count);
                 console.log(res.data);
-                setLoading(false);
             } catch (err) {
                 console.log(err);
             }
+            setLoading(false);
         }
-
         getOrders();
-    }, []);
+    }, [page]);
+
+    const seeMoreClicked = () => {
+        setPage(page + 1);
+    }
 
     return (
         <div>
@@ -39,6 +46,9 @@ export default function AddProduct() {
                             <hr className='border-black' />
                         </div>
                     ))}
+                    {orders.length < maxData && <div className='m-10 text-center'>
+                        <button onClick={seeMoreClicked} className='my-btns'>See more...</button>
+                    </div>}
                 </div>}
             </div>}
 

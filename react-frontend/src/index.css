@@ -83,7 +83,7 @@ input[type="checkbox"] {
     }
 
     .alert-text {
-        @apply bg-yellow-200 border text-black border-white px-5 py-2 rounded-md font-bold
+        @apply bg-yellow-200 border text-black border-white px-5 py-2 m-2 rounded-md font-bold
     }
 
     .links-1 {

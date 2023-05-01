@@ -158,11 +158,10 @@ export default function Product() {
         </div>
         <div className='my-20 mx-10 md:mx-20'>
           <p className='normal-headings text-left mx-0'>Product Description</p>
+          <hr className='border-black ' />
           <p className='small-headings text-left mx-0'>{productData.description}</p>
         </div>
         <QnA slug={slug} />
-
-
 
         <SimilarProducts slug={productData.category.slug} />
 

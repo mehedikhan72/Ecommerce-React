@@ -105,9 +105,9 @@ export default function QnA(props) {
     return (
         <div>
             <div className='flex flex-col md:flex-row'>
-                <div className='overflow-x-hidden md:overflow-x-hidden my-20 mx-10 md:mx-20 md:h-[500px] md:overflow-scroll w-full md:w-1/2 '>
+                <div className='my-20 overflow-x-hidden md:overflow-x-hidden md:h-[500px] md:overflow-scroll w-full px-10 md:px-20 md:w-1/2 '>
                     <p className='normal-headings text-left mx-0'>Questions n Answers</p>
-                    <hr className='mr-5' />
+                    <hr className='border-black ' />
                     {qna.length > 0 && qna.map((qna) => (
                         <div key={qna.id} className='my-5'>
                             {<div>
@@ -118,16 +118,16 @@ export default function QnA(props) {
 
                                 <div className='flex justify-start items-center'>
                                     <p className='font-bold border-1 rounded-md px-2 text-bold p-1 mx-1 mr-2 bg-black text-white hover:bg-gray-500'>Q</p>
-                                    <p className='ml-0 small-headings text-left'>{qna.question}</p>
-                                    {!qna.answer && <button onClick={() => questionSelectedToAnswer(qna.id, qna.question)} className='my-small-btns'>Answer</button>}
-                                    {qna.answer && <button onClick={() => questionSelectedToAnswer(qna.id, qna.question)} className='my-small-btns'>Edit Answer</button>}
+                                    <p className='ml-0 normal-text text-left'>{qna.question}</p>
+                                    {user && (user.is_admin || user.is_moderator) && !qna.answer && <button onClick={() => questionSelectedToAnswer(qna.id, qna.question)} className='my-small-btns'>Answer</button>}
+                                    {user && (user.is_admin || user.is_moderator) && qna.answer && <button onClick={() => questionSelectedToAnswer(qna.id, qna.question)} className='my-small-btns'>Edit Answer</button>}
                                 </div>
                                 <div className='flex justify-start items-center'>
                                     <p className='font-bold border-1 rounded-md px-2 text-bold p-1 mx-1 mr-2 bg-black text-white hover:bg-gray-500'>A</p>
                                     {qna.answer && <p className='ml-0 normal-text'>{qna.answer}</p>}
                                     {!qna.answer && <p className='ml-0 error-text'>Unanswered.</p>}
                                 </div>
-                                <hr className='mr-5 border-black' />
+                                <hr className=' border-black' />
                             </div>}
 
                         </div>
@@ -138,22 +138,28 @@ export default function QnA(props) {
                         <button onClick={seeMoreClicked} className='my-small-btns'>See more...</button>
                     </div>}
                 </div>
-                {!user.is_admin && !user.is_moderator && <div className='w-full md:w-1/2 flex flex-col justify-center'>
+                {user && !user.is_admin && !user.is_moderator && <div className='w-5/6 md:w-1/2 flex flex-col justify-center'>
                     <p className='small-headings'>Ask a question!</p>
                     <div className='flex justify-center items-center'>
-                        {user && <p className='alert-text text-center w-5/6'>We will notify you with an email as soon as your question is answered.</p>}
-                        {!user && <p className='alert-text text-center w-5/6'>You need to be logged in to ask questions.</p>}
+                        <p className='alert-text text-center w-5/6'>We will notify you with an email as soon as your question is answered.</p>
                     </div>
 
-                    {user && <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center'>
+                    <form onSubmit={handleSubmit} className='flex flex-col justify-center items-center'>
                         <textarea required className='my-input-fields resize-none h-[200px] w-5/6' value={question} onChange={(e) => setQuestion(e.target.value)} type='text' placeholder='Your question'></textarea>
                         <button type='submit' className='my-btns w-5/6'>Submit</button>
-                    </form>}
-                    {!user && <Link className='flex justify-center items-center p-5' to={{ pathname: '/login' }}><button className='my-btns'>Login</button></Link>}
+                    </form>
+                </div>}
+
+                {!user && <div className='w-5/6 md:w-1/2 flex flex-col justify-center'>
+                    <p className='small-headings'>Ask a question!</p>
+                    <div className='flex justify-center items-center'>
+                        <p className='alert-text text-center w-5/6'>You need to be logged in to ask questions.</p>
+                    </div>
+                    <Link className='flex justify-center items-center p-5' to={{ pathname: '/login' }}><button className='my-btns'>Login</button></Link>
                 </div>}
 
                 {/* Answering questions */}
-                {user && (user.is_moderator || user.is_admin) && <div className='w-full md:w-1/2 flex flex-col justify-center'>
+                {user && (user.is_moderator || user.is_admin) && <div className='w-5/6 md:w-1/2 flex flex-col justify-center'>
                     <p className='small-headings'>Answer questions!</p>
                     {selectedQuestion && <div>
                         <div className='flex justify-center items-center'>

@@ -6,13 +6,15 @@ import Loading from '../utils/Loading'
 export default function UnansweredQuestions() {
     const [questions, setQuestions] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [page, setPage] = useState(1);
+    const [maxData, setMaxData] = useState(null);
 
     useEffect(() => {
         const fetchQuestions = async () => {
             try {
-                const res = await axios.get('unanswered_questions/');
-                console.log(res.data)
-                setQuestions(res.data.results);
+                const res = await axios.get(`unanswered_questions?page=${page}`);
+                setQuestions([...questions, ...res.data.results]);
+                setMaxData(res.data.count);
                 setLoading(false);
             } catch (err) {
                 console.log(err);
@@ -20,7 +22,11 @@ export default function UnansweredQuestions() {
         }
 
         fetchQuestions();
-    }, [])
+    }, [page])
+
+    const seeMoreClicked = () => {
+        setPage(page + 1);
+    }
     return (
         <div>
             {loading && <Loading />}
@@ -35,6 +41,9 @@ export default function UnansweredQuestions() {
                         <hr className='mx-5 md:mx-20 xl:mx-40 border-black' />
                     </div>
                 ))}
+                {questions.length < maxData && <div className='m-10 text-center'>
+                    <button onClick={seeMoreClicked} className='my-btns'>See more...</button>
+                </div>}
             </div>}
             {!loading && questions.length === 0 && <div>
                 <div className='flex justify-center items-center'>

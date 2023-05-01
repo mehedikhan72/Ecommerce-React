@@ -81,9 +81,10 @@ export default function Navbar() {
                 </div>
             </ul>}
 
-            {userOptionsOn && <div ref={dropdownRef} className='flex flex-col items-center justify-center border border-gray-500 bg-white m-5 p-5 w-[200px] rounded-md z-[999] top-12 right-10 fixed'>
+            {userOptionsOn && <div ref={dropdownRef} className='flex flex-col items-center justify-center border border-gray-500 bg-white m-5 p-5 w-[200px] rounded-md z-[999] top-56 sm:top-12 right-10 fixed '>
                 <button className='my-btns w-[150px] m-1'>Edit Account</button>
-                <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: '/saved-products'}}><button className='my-btns w-[150px] m-1'>Saved Products</button></Link>
+                <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: `/${user.username}/orders` }}><button className='my-btns w-[150px] m-1'>Track Orders</button></Link>
+                <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: '/saved-products' }}><button className='my-btns w-[150px] m-1'>Saved Products</button></Link>
                 {user.is_admin && <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: '/dashboard/admin' }}><button className='my-btns w-[150px] m-1'>Admin Dashboard</button></Link>}
                 {user.is_moderator && !user.is_admin && <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: '/dashboard/moderator' }}><button className='my-btns w-[150px] m-1'>Moderator Dashboard</button></Link>}
                 <button onClick={logoutClicked} className='my-btns w-[150px] mt-1'>Logout</button>

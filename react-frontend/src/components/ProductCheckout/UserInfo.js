@@ -70,6 +70,9 @@ export default function UserInfo(props) {
         setSaveChecked(!saveChecked);
     }
 
+    //TODO: Bug: for some reason, user.id isn't being sent to the db, but since we have another
+    //unique field which is username, we can get the job done for now.
+
     const infoAdded = (e) => {
         e.preventDefault();
         setBuyerInfo({
