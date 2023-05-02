@@ -21,6 +21,7 @@ import SavedProducts from './components/SavedProducts';
 import OrderDetails from './components/dashboard/OrderDetails';
 import UserOrderList from './components/trackOrder/UserOrderList';
 import UserOrderDetail from './components/trackOrder/UserOrderDetail';
+import Confirmation from './components/utils/Confirmation';
 
 function App() {
   return (
@@ -45,12 +46,15 @@ function App() {
           <Route path="dashboard/moderator" element={<ModeratorDashboard />} />
           <Route path="order/:id" element={<OrderDetails />} />
 
+
+          <Route path=":username/orders/" element={<UserOrderList />} />
+          <Route path=":username/order/:id" element={<UserOrderDetail />} />
+          <Route path="test" element={<Confirmation />} />
+
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<Custom404 />} />
 
-          <Route path=":username/orders/" element={<UserOrderList />} />
-          <Route path=":username/order/:id" element={<UserOrderDetail />} />
         </Routes>
         <ScrollUp />
       </AuthProvider>

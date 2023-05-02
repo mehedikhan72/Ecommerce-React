@@ -101,4 +101,8 @@ input[type="checkbox"] {
     .my-btns-3 {
         @apply text-center bg-black text-white px-4 py-2 rounded-md hover:bg-gray-700 cursor-pointer font-bold
     }
+
+    .disabled-scroll {
+        @apply overflow-hidden;
+    }
 }
