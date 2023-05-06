@@ -11,7 +11,6 @@ import { AuthProvider } from './components/context/AuthContext';
 import Login from './components/Auth/Login';
 import Register from './components/Auth/Register';
 import CartCheckout from './components/cartCheckout/CartCheckout';
-import EditAccount from './components/edit/EditAccount';
 import ProductCheckout from './components/productCheckout/ProductCheckout';
 import ScrollUp from './components/utils/ScrollUp';
 import AdminDashboard from './components/dashboard/AdminDashboard';
@@ -22,10 +21,11 @@ import OrderDetails from './components/dashboard/OrderDetails';
 import UserOrderList from './components/trackOrder/UserOrderList';
 import UserOrderDetail from './components/trackOrder/UserOrderDetail';
 import Confirmation from './components/utils/Confirmation';
+import EditAccount from './components/EditAccount';
 
 function App() {
   return (
-    <div className="App overflow-x-hidden">
+    <div className="App overflow-x-hidden min-h-screen">
       <AuthProvider >
         <Navbar />
         <Searchbox />
@@ -50,7 +50,6 @@ function App() {
           <Route path=":username/orders/" element={<UserOrderList />} />
           <Route path=":username/order/:id" element={<UserOrderDetail />} />
           <Route path="test" element={<Confirmation />} />
-
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="*" element={<Custom404 />} />
