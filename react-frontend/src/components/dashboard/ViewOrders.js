@@ -31,6 +31,8 @@ export default function AddProduct() {
         setPage(page + 1);
     }
 
+    //TODO: view goes to the top when see more clicked. need to fix this.
+
     return (
         <div>
             {loading && <Loading />}

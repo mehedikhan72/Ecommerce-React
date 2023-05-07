@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 import NoCartError from './NoCartError'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 
 export default function CartCheckout() {
 
@@ -14,6 +15,7 @@ export default function CartCheckout() {
     const [cartItems, setCartItems] = useState(localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : []);
     const [subTotal, setSubTotal] = useState(0);
     const [shipping, setShipping] = useState(50);
+    const [paymentMethod, setPaymentMethod] = useState('online');
 
     useEffect(() => {
         let total = 0;
@@ -42,9 +44,11 @@ export default function CartCheckout() {
                 order: info,
                 order_items: cartItems,
                 shipping_charge: shipping,
+                payment_method: paymentMethod,
             })
+            console.log(order);
         }
-    }, [cartItems, info, shipping])
+    }, [cartItems, info, shipping, paymentMethod])
 
     const [orderPlacedState, setOrderPlacedState] = useState(false);
 
@@ -54,8 +58,16 @@ export default function CartCheckout() {
         try {
             const response = await axios.post('place_order/', order);
             console.log(response.data);
-            setOrderPlacedState(true);
-            localStorage.removeItem('cart');
+            if (paymentMethod === 'online') {
+                if ((response.data.status === 'SUCCESS' || response.data.status === 'success') && response.data.GatewayPageURL) {
+                    window.location.href = response.data.GatewayPageURL;
+                }
+            }
+            else {
+                // COD payments.
+                setOrderPlacedState(true);
+                localStorage.removeItem('cart');
+            }
         }
         catch (error) {
             console.log(error);
@@ -100,6 +112,21 @@ export default function CartCheckout() {
                                     <p className='small-headings'>Total</p>
                                     <p className='small-headings'>TK {subTotal + shipping}</p>
                                 </div>
+                            </div>
+
+                            <div className='border-t-4 m-5'>
+                                <p className='small-headings text-left m-2'>Payment Option</p>
+                                <FormControl>
+                                    <RadioGroup
+                                        aria-labelledby="demo-controlled-radio-buttons-group"
+                                        name="controlled-radio-buttons-group"
+                                        value={paymentMethod}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                    >
+                                        <FormControlLabel value="online" control={<Radio />} label="Pay Online" />
+                                        <FormControlLabel value="COD" control={<Radio />} label="Cash On Delivery" />
+                                    </RadioGroup>
+                                </FormControl>
                             </div>
                         </div>
                     </div>

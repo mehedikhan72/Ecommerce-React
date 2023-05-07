@@ -2,7 +2,6 @@ import { MenuIcon, XIcon } from '@heroicons/react/outline'
 import { useState, useContext, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import AuthContext from './context/AuthContext';
-import { useNavigate } from 'react-router-dom';
 import Confirmation from './utils/Confirmation';
 
 
@@ -63,6 +62,15 @@ export default function Navbar() {
         }
     }, [showConfirmation])
 
+    let cartItems = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+    const [cartItemCount, setCartItemcount] = useState(cartItems.length);
+
+    useEffect(() => {
+        cartItems = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+        setCartItemcount(cartItems.length);
+    }, [localStorage.getItem('cart')])
+
+
     return (
         <div>
             {showConfirmation && <Confirmation message={message} yesClicked={logout} noClicked={noClicked} event={"logout"} />}
@@ -75,7 +83,17 @@ export default function Navbar() {
                     <div className='hidden sm:flex pr-5 items-center'>
                         <ul className='hidden sm:flex'>
                             <Link to={{ pathname: '/' }}><li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-home text-xl p-1'></i>HOME</div></li></Link>
-                            <Link to={{ pathname: '/cart ' }}><li className='nav-list font-bold'><div className='flex items-center'><i className='bx bx-cart text-xl p-1'></i>CART</div></li></Link>
+                            <div className='relative'>
+                                <Link to={{ pathname: '/cart ' }}>
+                                    <li className='nav-list font-bold'>
+                                        <div className='flex items-center'>
+                                            <i className='bx bx-cart text-xl p-1'>
+                                            </i>CART
+                                            {cartItemCount > 0 && <p className='absolute text-center right-1 top-3 h-6 w-6 rounded-full text-black bg-white'>{cartItemCount}</p>}
+                                        </div>
+                                    </li>
+                                </Link>
+                            </div>
                         </ul>
                         {!user && <Link to={{ pathname: '/login' }}><button className='my-btns ml-5'>LOGIN</button></Link>}
                         {user &&
@@ -92,7 +110,16 @@ export default function Navbar() {
 
                 {navOpen && <ul className='absolute bg-black text-white w-full px-8 text-center sm:hidden'>
                     <Link to={{ pathname: '/' }}><li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center font-bold'><i className='bx bx-home text-xl p-1'></i>HOME</div></li></Link>
-                    <Link to={{ pathname: '/cart ' }}><li className='border-b-2 border-zinc-300 w-full py-4'><div className='flex items-center justify-center font-bold'><i className='bx bx-cart text-xl p-1'></i>CART</div></li></Link>
+                    <div className='relative'>
+                        <Link to={{ pathname: '/cart ' }}>
+                            <li className='border-b-2 border-zinc-300 w-full py-4'>
+                                <div className='flex items-center justify-center font-bold'>
+                                    <i className='bx bx-cart text-xl p-1'></i>
+                                    CART
+                                </div>
+                            </li>
+                        </Link>
+                    </div>
                     <div className='py-4'>
                         {!user && <Link to={{ pathname: '/login' }}><button className='my-btns'>LOGIN</button></Link>}
                         {user && <div onClick={toggleUserOptions} className='flex justify-center items-center'>

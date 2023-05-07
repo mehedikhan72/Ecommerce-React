@@ -2,10 +2,11 @@ import React, { useEffect, useState, useContext } from 'react'
 import AuthContext from '../context/AuthContext'
 import UserInfo from './UserInfo'
 import axios from '../axios/AxiosSetup'
-import { Link } from 'react-router-dom'
+import { Link, redirect } from 'react-router-dom'
 import NoProductError from './NoProductError'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
+import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 
 export default function ProductCheckout() {
     const { width, height } = useWindowSize()
@@ -13,6 +14,7 @@ export default function ProductCheckout() {
     const [cartItems, setCartItems] = useState(localStorage.getItem('buy_now_product') ? JSON.parse(localStorage.getItem('buy_now_product')) : []);
     const [subTotal, setSubTotal] = useState(0);
     const [shipping, setShipping] = useState(50);
+    const [paymentMethod, setPaymentMethod] = useState('online');
 
     useEffect(() => {
         let total = 0;
@@ -41,9 +43,10 @@ export default function ProductCheckout() {
                 order: info,
                 order_items: cartItems,
                 shipping_charge: shipping,
+                payment_method: paymentMethod,
             })
         }
-    }, [cartItems, info, shipping])
+    }, [cartItems, info, shipping, paymentMethod])
 
     const [orderPlacedState, setOrderPlacedState] = useState(false);
     console.log(order);
@@ -54,14 +57,24 @@ export default function ProductCheckout() {
         try {
             const response = await axios.post('place_order/', order);
             console.log(response.data);
-            setOrderPlacedState(true);
-            localStorage.removeItem('cart');
+            if (paymentMethod === 'online') {
+                if ((response.data.status === 'SUCCESS' || response.data.status === 'success') && response.data.GatewayPageURL) {
+                    window.location.href = response.data.GatewayPageURL;
+                }
+            }
+            else {
+                // COD payments.
+                setOrderPlacedState(true);
+                localStorage.removeItem('buy_now_product');
+            }
         }
         catch (error) {
             console.log(error);
         }
         console.log("Order Placed")
     }
+
+    console.log(paymentMethod);
 
     return (
         <div>
@@ -100,6 +113,21 @@ export default function ProductCheckout() {
                                     <p className='small-headings'>Total</p>
                                     <p className='small-headings'>TK {subTotal + shipping}</p>
                                 </div>
+                            </div>
+
+                            <div className='border-t-4 m-5'>
+                                <p className='small-headings text-left m-2'>Payment Option</p>
+                                <FormControl>
+                                    <RadioGroup
+                                        aria-labelledby="demo-controlled-radio-buttons-group"
+                                        name="controlled-radio-buttons-group"
+                                        value={paymentMethod}
+                                        onChange={(e) => setPaymentMethod(e.target.value)}
+                                    >
+                                        <FormControlLabel value="online" control={<Radio />} label="Pay Online" />
+                                        <FormControlLabel value="COD" control={<Radio />} label="Cash On Delivery" />
+                                    </RadioGroup>
+                                </FormControl>
                             </div>
                         </div>
                     </div>

@@ -22,6 +22,7 @@ import UserOrderList from './components/trackOrder/UserOrderList';
 import UserOrderDetail from './components/trackOrder/UserOrderDetail';
 import Confirmation from './components/utils/Confirmation';
 import EditAccount from './components/EditAccount';
+import PaymentResult from './components/Payment/PaymentResult';
 
 function App() {
   return (
@@ -45,6 +46,8 @@ function App() {
           <Route path="dashboard/admin" element={<AdminDashboard />} />
           <Route path="dashboard/moderator" element={<ModeratorDashboard />} />
           <Route path="order/:id" element={<OrderDetails />} />
+
+          <Route path="payment-result" element={<PaymentResult />} />
 
 
           <Route path=":username/orders/" element={<UserOrderList />} />
