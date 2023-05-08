@@ -18,10 +18,10 @@ export default function PostReviews(props) {
                 review: review,
                 rating: rating
             });
-            setLoading(false);
             setRating(null);
             setReview("");
-            window.location.reload();
+            setLoading(false);
+            props.setReviewAdded(!props.reviewAdded)
         } catch (err) {
             console.log(err);
             setLoading(false);

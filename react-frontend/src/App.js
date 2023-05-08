@@ -23,6 +23,12 @@ import UserOrderDetail from './components/trackOrder/UserOrderDetail';
 import Confirmation from './components/utils/Confirmation';
 import EditAccount from './components/EditAccount';
 import PaymentResult from './components/Payment/PaymentResult';
+import Footer from './components/Footer';
+import TOS from './components/legal/TOS';
+import RefundPolicy from './components/legal/RefundPolicy';
+
+
+
 
 function App() {
   return (
@@ -49,6 +55,10 @@ function App() {
 
           <Route path="payment-result" element={<PaymentResult />} />
 
+          {/* Legal */}
+          <Route path="terms-of-service" element={<TOS />} />
+          <Route path="refund-policy" element={<RefundPolicy />} />
+
 
           <Route path=":username/orders/" element={<UserOrderList />} />
           <Route path=":username/order/:id" element={<UserOrderDetail />} />
@@ -58,6 +68,7 @@ function App() {
           <Route path="*" element={<Custom404 />} />
 
         </Routes>
+        <Footer />
         <ScrollUp />
       </AuthProvider>
     </div>

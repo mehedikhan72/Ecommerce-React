@@ -52,15 +52,33 @@ export default function Product() {
   const [productQuantity, selectedProductQuantity] = useState(1);
 
   // Get the available product count of the selected size
-
   const [sizeStock, setSizeStock] = useState(0);
+
+  // const minusAmount = (sizeToBeDeducted) => {
+  //   // Deduct the amount of the selected size that are present in the cart and setSizeStock;
+  //   const existingCart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : [];
+  //   let count = 0;
+  //   existingCart.forEach((item) => {
+  //     if (item.size[0].size === sizeToBeDeducted) {
+  //       count += item.quantity;
+  //     }
+  //   });
+
+  //   setSizeStock((prev) => prev - count);
+  // }
+
+  //TODO: We will deal with 'adding more to cart than available' in the cart page when the user tries to checkout.
+  //That would stop any unwanted sale from happening.
 
   useEffect(() => {
     const fetchStock = async () => {
       if (productSize) {
         try {
           const response = await axios.get(`get_size_specific_stock/${productId}/${productSize[0].size}/`)
+          console.log(response.data)
           setSizeStock(response.data)
+          // Minus the ones that are in the cart.
+          // minusAmount(productSize[0].size)
         } catch (error) {
           console.log(error)
         }
@@ -102,6 +120,7 @@ export default function Product() {
   }
 
   const [isEligibleReviewer, setIsEligibleReviewer] = useState(false);
+  const [reviewAdded, setReviewAdded] = useState(false);
 
   useEffect(() => {
     const checkEligibility = async () => {
@@ -117,7 +136,8 @@ export default function Product() {
       checkEligibility();
     }
 
-  }, [slug])
+  }, [slug, reviewAdded])
+
 
   // TODO: BUG: we made sure user cannot add to cart more than that is available. but when they add the same 
   // product to the cart again, we show the old number like.. "only 3 left", wherease it's possible that he
@@ -142,7 +162,8 @@ export default function Product() {
                   <p>Availability : </p> <p className='success-text'>In stock</p>
                 </div>
                 <div>
-                  <p className='alert-text text-center mx-10 lg:mx-20 w-[250px]'>Only {sizeStock} left. Hurry up!</p>
+                  {sizeStock > 0 && <p className='alert-text text-center mx-10 lg:mx-20 w-[250px]'>Only {sizeStock} left. Hurry up!</p>}
+                  {sizeStock <= 0 && <p className='alert-text text-center mx-10 lg:mx-20 w-[250px]'>This size is unavailable at this moment.</p>}
                 </div>
               </div>}
 
@@ -161,8 +182,10 @@ export default function Product() {
                 <p className='text-4xl'>TK {productData.regular_price}</p>
               </div>}
 
-            <Size productId={productId} selectedProductSize={selectedProductSize} />
-            <Quantity selectedProductQuantity={selectedProductQuantity} sizeStock={sizeStock} />
+            {productData.stock > 0 && <div>
+              <Size productId={productId} selectedProductSize={selectedProductSize} />
+              <Quantity selectedProductQuantity={selectedProductQuantity} sizeStock={sizeStock} />
+            </div>}
 
             {/* TODO: Add a different animation later */}
             {addedToCart &&
@@ -170,9 +193,9 @@ export default function Product() {
             }
 
             <div className='flex  mx-10 my-5 lg:mx-20 items-center'>
-              <button onClick={AddToCart} className='my-btns mr-2 w-[120px] md:w-[150px] text-[12px] md:text-base'>Add To Cart</button>
+              {productData.stock > 0 && sizeStock > 0 && <button onClick={AddToCart} className='my-btns mr-2 w-[120px] md:w-[150px] text-[12px] md:text-base'>Add To Cart</button>}
               <button onClick={changeWishList} className='my-btns m-1 w-[70px] md:w-[150px] text-[12px] md:text-base' >{addedToWishlist ? 'Unsave' : 'Save'}</button>
-              <button onClick={handleBuyNow} className='my-btns ml-2 w-[120px] md:w-[150px] text-[12px] md:text-base'>Buy Now</button>
+              {productData.stock > 0 && sizeStock > 0 && <button onClick={handleBuyNow} className='my-btns ml-2 w-[120px] md:w-[150px] text-[12px] md:text-base'>Buy Now</button>}
             </div>
           </div>
         </div>
@@ -181,15 +204,14 @@ export default function Product() {
           <hr className='border-black ' />
           <p className='small-headings text-left mx-0'>{productData.description}</p>
         </div>
-        {isEligibleReviewer && <PostReviews slug={slug} />}
-        <GetReviews slug={slug} />
+        {isEligibleReviewer && <PostReviews slug={slug} reviewAdded={reviewAdded} setReviewAdded={setReviewAdded} />}
+        <GetReviews slug={slug} reviewAdded={reviewAdded} />
         <QnA slug={slug} />
 
         <SimilarProducts slug={productData.category.slug} />
 
       </div>}
 
-      {/* TODO: Add loading component later */}
       {(!productData || !productId) && !fetchComleted && <Loading />}
       {(!productData || !productId) && fetchComleted && <Custom404 />}
 

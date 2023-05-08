@@ -28,7 +28,7 @@ export default function GetReviews(props) {
             setLoading(true)
             fetchReviews();
         }
-    }, [slug])
+    }, [slug, props.reviewAdded])
 
     useEffect(() => {
         const fetchNewReviews = async () => {
@@ -44,7 +44,7 @@ export default function GetReviews(props) {
         }
         setLoading(true);
         fetchNewReviews();
-    }, [page]);
+    }, [page, props.reviewAdded]);
 
     const seeMoreClicked = () => {
         setPage(page + 1);
@@ -66,7 +66,7 @@ export default function GetReviews(props) {
             getAvgRating();
         }
 
-    }, [slug])
+    }, [slug, props.reviewAdded])
 
     return (
         <div className='px-10 md:px-20'>

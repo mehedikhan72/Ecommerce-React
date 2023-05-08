@@ -55,7 +55,7 @@ input[type="checkbox"] {
     }
 
     .normal-text {
-        @apply text-base sm:text-lg font-bold text-left mx-5 my-2
+        @apply text-sm sm:text-base font-bold text-left mx-5 my-2
     }
 
     .cut-price {

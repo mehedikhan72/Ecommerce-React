@@ -149,8 +149,8 @@ export default function QnA(props) {
 
                         </div>
                     ))}
-                    {qna.length === 0 && <p className='normal-text ml-0'>No questions yet. Be the first one to ask.</p>}
-
+                    {qna.length === 0 && !user.is_admin && !user.is_moderator && <p className='normal-text ml-0'>No questions yet. Be the first one to ask.</p>}
+                    {qna.length === 0 && (user.is_admin || user.is_moderator) && <p className='normal-text ml-0'>No questions yet. Nothing to answer.</p>}
                     {qna.length < maxData && <div className=''>
                         <button onClick={seeMoreClicked} className='my-small-btns'>See more...</button>
                     </div>}
