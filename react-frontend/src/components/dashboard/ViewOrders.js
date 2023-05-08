@@ -42,7 +42,10 @@ export default function AddProduct() {
                     {orders.map((order) => (
                         <div key={order.id} className='m-1 p-1'>
                             <div className='flex justify-between items-center'>
-                                <p className='normal-text ml-0'>{order.first_name} {order.last_name} ordered on {order.date_ordered}</p>
+                                <div className='flex justify-center items-center'>
+                                    <p className={order.status === 'Delivered' ? 'success-text ml-0' : 'alert-text ml-0'}>{order.first_name} ordered on {order.date_ordered}</p>
+                                    {order.status === 'Shipped' && <p className='hidden md:block alert-text'><i className='bx bxs-truck text-xl'></i></p>}
+                                </div>
                                 <Link to={{ pathname: `/order/${order.id}` }}><button className='my-small-btns'>View details</button></Link>
                             </div>
                             <hr className='border-black' />

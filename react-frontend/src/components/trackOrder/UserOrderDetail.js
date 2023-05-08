@@ -12,7 +12,6 @@ export default function UserOrderDetails() {
 
     const [orderItems, setOrderItems] = useState([]);
     const [orderData, setOrderData] = useState({});
-    const [totalBill, setTotalBill] = useState(0);
     const [totalItems, setTotalItems] = useState(0);
     const [loading, setLoading] = useState(true);
 
@@ -35,13 +34,10 @@ export default function UserOrderDetails() {
     }, []);
 
     useEffect(() => {
-        let total = 0;
         let totalItems = 0;
         orderItems.forEach((item) => {
-            total += item.price;
             totalItems += item.quantity;
         });
-        setTotalBill(total);
         setTotalItems(totalItems);
     }, [orderItems]);
 
@@ -84,7 +80,7 @@ export default function UserOrderDetails() {
                         <p className={orderData.status === 'Delivered' ? 'hidden md:block success-text scale-150' : 'hidden md:block alert-text scale-150'}>{orderData.status}</p>
                     </div>
 
-                    <p className='small-headings md:normal-headings md:m-2'>Total Bills: {totalBill}</p>
+                    <p className='small-headings md:normal-headings md:m-2'>Total Bills: {orderData.total}</p>
                 </div>
 
                 <div className='mx-2 md:mx-5 p-5'>
@@ -99,6 +95,27 @@ export default function UserOrderDetails() {
                         <p className='normal-text ml-0'>Phone No: {orderData.phone}</p>
                     </div>
                     <p className='normal-text ml-0'>Address: {orderData.address}</p>
+                </div>
+
+                <div className='mx-2 md:mx-5 p-5'>
+                    <p className='normal-headings ml-0 text-left m-0 mb-2 py-5'>Payment Information</p>
+                    <p className='normal-text ml-0'>Payment method: {orderData.payment_method}</p>
+                    
+                    {orderData.payment_method === 'online' && orderData.online_paid && <div className='flex justify-start items-center ml-0'>
+                        <p className='normal-text ml-0'>Paid</p>
+                        <p className='success-text ml-0'>TK {orderData.total}</p>
+                    </div>}
+
+                    {orderData.payment_method === 'COD' && orderData.status === 'Delivered' && <div className='flex justify-start items-center ml-0'>
+                        <p className='normal-text ml-0'>Paid</p>
+                        <p className='success-text ml-0'>TK {orderData.total}</p>
+                    </div>}
+
+                    {orderData.payment_method === 'online' && orderData.online_paid && orderData.transaction_id && <div className='flex flex-col sm:flex-row justify-start items-left ml-0'>
+                        <p className='normal-text ml-0'>Transaction ID: </p>
+                        <p className='normal-text ml-0'>{orderData.transaction_id}</p>
+                    </div>}
+                    <p className='normal-text ml-0'>Shipping charge: TK {orderData.shipping_charge}</p>
                 </div>
 
                 <div className='mx-2 md:mx-5 p-5'>

@@ -40,15 +40,17 @@ export default function UserOrderList() {
                             <div key={order.id} className='m-2 p-2'>
                                 <div className='flex justify-between items-center'>
                                     <div className='flex justify-center items-center'>
-                                        <p className='normal-text ml-0'>You ordered on {order.date_ordered}</p>
-                                        <p className={order.status === 'Delivered' ? 'hidden sm:block success-text' : 'hidden sm:block alert-text'}>{order.status}</p>
+                                        <p className={order.status === 'Delivered' ? 'success-text ml-0' : 'alert-text ml-0'}>You ordered on {order.date_ordered}</p>
+                                        {order.status === 'Shipped' && <p className='hidden md:block alert-text'><i className='bx bxs-truck text-xl'></i></p>}
                                     </div>
-                                    <Link to={{ pathname:`/${username}/order/${order.id}`}}><button className='my-btns my-2'>Track</button></Link>
+
+                                    <Link to={{ pathname: `/${username}/order/${order.id}` }}><button className='my-btns my-2'>Track</button></Link>
                                 </div>
                                 <hr className='border-black' />
                             </div>
                         ))}
-                    </div>}</div>}
+                    </div>}
+                </div>}
 
             </div>}
 

@@ -10,6 +10,8 @@ import Loading from './utils/Loading';
 import Custom404 from './utils/Custom404';
 import { useNavigate } from 'react-router-dom';
 import QnA from './productpage/QnA';
+import GetReviews from './productpage/GetReviews';
+import PostReviews from './productpage/PostReviews';
 
 export default function Product() {
 
@@ -99,6 +101,24 @@ export default function Product() {
     }
   }
 
+  const [isEligibleReviewer, setIsEligibleReviewer] = useState(false);
+
+  useEffect(() => {
+    const checkEligibility = async () => {
+      try {
+        const response = await axios.get(`is_eligible_reviewer/${slug}/`)
+        setIsEligibleReviewer(response.data.is_eligible)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    if (slug) {
+      checkEligibility();
+    }
+
+  }, [slug])
+
   // TODO: BUG: we made sure user cannot add to cart more than that is available. but when they add the same 
   // product to the cart again, we show the old number like.. "only 3 left", wherease it's possible that he
   // added those 3 items before. need to come up with a solution to this. 
@@ -161,6 +181,8 @@ export default function Product() {
           <hr className='border-black ' />
           <p className='small-headings text-left mx-0'>{productData.description}</p>
         </div>
+        {isEligibleReviewer && <PostReviews slug={slug} />}
+        <GetReviews slug={slug} />
         <QnA slug={slug} />
 
         <SimilarProducts slug={productData.category.slug} />

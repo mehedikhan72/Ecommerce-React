@@ -13,6 +13,7 @@ export default function ProductList() {
     const [fetchComleted, setFetchCompleted] = useState(false);
     const [page, setPage] = useState(1);
     const [maxData, setMaxData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     // Fetch using axios
     useEffect(() => {
@@ -25,13 +26,16 @@ export default function ProductList() {
                 setProducts(response.data.results);
                 setMaxData(response.data.count)
                 setFetchCompleted(true)
+                setLoading(false);
             } catch (error) {
                 console.log(error)
                 setFetchCompleted(true)
+                setLoading(false);
             }
         }
         fetchProducts();
         setPage(1);
+        setLoading(true);
     }, [category])
 
 
@@ -40,16 +44,16 @@ export default function ProductList() {
             try {
                 const response = await axios.get(`category/${category}?page=${page}`)
                 setProducts([...products, ...response.data.results]);
+                setLoading(false);
             } catch (error) {
                 console.log(error)
                 setFetchCompleted(true)
+                setLoading(false);
             }
         }
+        setLoading(true);
         fetchNewProducts();
     }, [page])
-
-    console.log(category)
-    console.log(page);
 
     const seeMoreClicked = () => {
         setPage(page + 1);
@@ -58,7 +62,7 @@ export default function ProductList() {
     return (
         <div>
             <CategoryOptions />
-            {products.length === 0 && !fetchComleted && <Loading />}
+            {loading && <Loading />}
             {products.length === 0 && fetchComleted && <Custom404 />}
             {products.length !== 0 && <div>
                 <p className='normal-headings mt-5'>Get some of the latest {category} from Halal Brothers!</p>

@@ -75,7 +75,7 @@ input[type="checkbox"] {
     }
 
     .success-text {
-        @apply bg-green-600 border text-white border-white px-5 py-2 m-2 rounded-md 
+        @apply bg-green-600 border text-white border-white px-5 py-2 m-2 rounded-md font-bold
     }
 
     .error-text {

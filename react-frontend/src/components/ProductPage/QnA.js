@@ -2,12 +2,14 @@ import React, { useState, useEffect, useContext } from 'react';
 import AuthContext from '../context/AuthContext'
 import axios from '../axios/AxiosSetup'
 import { Link } from 'react-router-dom';
+import Loading from '../utils/Loading';
 
 export default function QnA(props) {
     const { user } = useContext(AuthContext);
     const [qna, setQna] = useState([]);
     const [page, setPage] = useState(1);
     const [maxData, setMaxData] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     const slug = props.slug;
 
@@ -19,13 +21,18 @@ export default function QnA(props) {
                 const res = await axios.get(`qna/${slug}?page=${page}`);
                 setQna(res.data.results);
                 setMaxData(res.data.count);
-                console.log(res.data);
+                setLoading(false);
             } catch (err) {
                 console.log(err);
+                setLoading(false);
             }
         }
 
-        fetchQnA();
+        if (slug) {
+            setLoading(true);
+            fetchQnA();
+        }
+
     }, [slug])
 
     useEffect(() => {
@@ -33,10 +40,13 @@ export default function QnA(props) {
             try {
                 const res = await axios.get(`qna/${slug}?page=${page}`);
                 setQna([...qna, ...res.data.results]);
+                setLoading(false);
             } catch (err) {
                 console.log(err);
+                setLoading(false);
             }
         }
+        setLoading(true);
         fetchNewQnA();
     }, [page]);
 
@@ -44,17 +54,20 @@ export default function QnA(props) {
     const [questionAdded, setQuestionAdded] = useState(false);
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try {
             const res = await axios.post(`add_question/${slug}/`, {
                 question: question
             });
             setQuestion('');
             setQuestionAdded(true);
+            setLoading(false);
             setTimeout(() => {
                 setQuestionAdded(false);
             }, 3000);
         } catch (err) {
             console.log(err);
+            setLoading(false);
         }
     }
 
@@ -70,6 +83,7 @@ export default function QnA(props) {
     }
 
     const questionAnswered = async (e) => {
+        setLoading(true);
         e.preventDefault();
         try {
             const res = await axios.post(`add_answer/${selectedQuestionId}/`, {
@@ -79,11 +93,13 @@ export default function QnA(props) {
             setSelectedQuestion(null);
             setSelectedQuestionId(null);
             setAnswerAdded(true);
+            setLoading(false);
             setTimeout(() => {
                 setAnswerAdded(false);
             }, 3000);
         } catch (err) {
             console.log(err);
+            setLoading(false);
         }
     }
 
@@ -104,6 +120,7 @@ export default function QnA(props) {
 
     return (
         <div>
+            {loading && <Loading />}
             <div className='flex flex-col md:flex-row'>
                 <div className='my-20 overflow-x-hidden md:overflow-x-hidden md:h-[500px] md:overflow-scroll w-full px-10 md:px-20 md:w-1/2 '>
                     <p className='normal-headings text-left mx-0'>Questions n Answers</p>
