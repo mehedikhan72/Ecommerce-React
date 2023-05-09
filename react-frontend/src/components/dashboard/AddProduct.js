@@ -144,6 +144,7 @@ export default function AddProduct() {
     }
 
     // TODO: Make sure the slug(product name is unique)
+    // TODO: Make sure the stock count it the same as sum(quantity * size)
 
     const removeImages = () => {
         setImages([]);

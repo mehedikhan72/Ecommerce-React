@@ -5,6 +5,7 @@ import axios from './axios/AxiosSetup'
 import CategoryOptions from './CategoryOptions';
 import Loading from './utils/Loading';
 import Custom404 from './utils/Custom404';
+import StarRatings from 'react-star-ratings';
 
 
 export default function ProductList() {
@@ -83,6 +84,10 @@ export default function ProductList() {
                                     <div className='price'>
                                         <p>TK {product.regular_price}</p>
                                     </div>}
+                                {product.total_reviews > 0 && <div className='flex justify-center items-center m-2'>
+                                    <StarRatings starRatedColor="orange" starDimension="25px" starSpacing="0px" rating={product.avg_rating} />
+                                    <p className='normal-text text-lg ml-2'>({product.total_reviews})</p>
+                                </div>}
                             </div>
                         </Link>
                     ))}

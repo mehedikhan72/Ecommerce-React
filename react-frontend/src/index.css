@@ -39,7 +39,7 @@ input[type="checkbox"] {
     }
 
     .each-item {
-        @apply m-5 border border-gray-500 p-10 rounded-md h-[500px]
+        @apply m-5 border border-gray-500 p-10 rounded-md h-[520px]
     }
 
     .each-image {

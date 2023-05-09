@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useContext } from 'react'
 import { useParams } from 'react-router-dom'
 import axios from './axios/AxiosSetup'
 import GetImages from './GetImages';
@@ -12,14 +12,21 @@ import { useNavigate } from 'react-router-dom';
 import QnA from './productpage/QnA';
 import GetReviews from './productpage/GetReviews';
 import PostReviews from './productpage/PostReviews';
+import { Link } from 'react-router-dom';
+import AuthContext from './context/AuthContext';
 
 export default function Product() {
 
+  const { user } = useContext(AuthContext);
   const { slug } = useParams();
   const [productId, setProductId] = useState(null);
   const [productData, setProductData] = useState([]);
   const [fetchComleted, setFetchCompleted] = useState(false);
   const [addedToWishlist, setAddedToWishlist] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [slug])
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -109,7 +116,7 @@ export default function Product() {
     setTimeout(() => {
       setAddedToCart(false);
     }, 3000);
-    
+
   }
 
   const navigate = useNavigate();
@@ -208,13 +215,16 @@ export default function Product() {
             </div>
           </div>
         </div>
+        {user && (user.is_admin || user.is_moderator) && <div className='flex justify-center items-center'>
+          <Link to={{ pathname: `/edit-product/${slug}` }}><button className='my-btns'>Edit this Product</button></Link>
+        </div>}
         <div className='my-20 mx-10 md:mx-20'>
           <p className='normal-headings text-left mx-0'>Product Description</p>
           <hr className='border-black ' />
           <p className='small-headings text-left mx-0'>{productData.description}</p>
         </div>
         {isEligibleReviewer && <PostReviews slug={slug} reviewAdded={reviewAdded} setReviewAdded={setReviewAdded} />}
-        <GetReviews slug={slug} reviewAdded={reviewAdded} />
+        <GetReviews slug={slug} reviewAdded={reviewAdded} avgRating={productData.avg_rating} totalReviews={productData.total_reviews}/>
         <QnA slug={slug} />
 
         <SimilarProducts slug={productData.category.slug} />

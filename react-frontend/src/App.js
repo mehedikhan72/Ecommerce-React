@@ -26,6 +26,7 @@ import PaymentResult from './components/Payment/PaymentResult';
 import Footer from './components/Footer';
 import TOS from './components/legal/TOS';
 import RefundPolicy from './components/legal/RefundPolicy';
+import EditProduct from './components/EditProduct';
 
 
 
@@ -47,6 +48,8 @@ function App() {
 
           <Route path="/search" element={<SearchResults />} />
           <Route path="/saved-products" element={<SavedProducts />} />
+
+          <Route path="/edit-product/:slug" element={<EditProduct />} />
 
           {/* Dashboards */}
           <Route path="dashboard/admin" element={<AdminDashboard />} />
