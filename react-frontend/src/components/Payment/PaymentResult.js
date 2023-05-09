@@ -22,7 +22,7 @@ export default function PaymentResult() {
     }, [status]);
 
     return (
-        <div>
+        <div className='my-20'>
             {status === 'success' && (
                 <div className='flex flex-col justify-center items-center'>
                     <h1 className='success-text w-3/4 sm:w-1/2 text-center'>Payment successful, order placed successfully!</h1>

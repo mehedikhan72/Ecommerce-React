@@ -94,13 +94,22 @@ export default function Product() {
   const AddToCart = () => {
     const existingCart = localStorage.getItem('cart');
     let cart = existingCart ? JSON.parse(existingCart) : [];
-    const newItem = { id: cart.length, size: productSize, quantity: productQuantity, productData };
-    cart.push(newItem);
+
+    const existingItemIndex = cart.findIndex((item) => item.productData.id === productData.id && item.size[0].size === productSize[0].size);
+    if (existingItemIndex !== -1) {
+      cart[existingItemIndex].quantity += productQuantity;
+    }
+    else {
+      const newItem = { id: cart.length, size: productSize, quantity: productQuantity, productData };
+      cart.push(newItem);
+    }
+
     localStorage.setItem('cart', JSON.stringify(cart));
     setAddedToCart(true);
     setTimeout(() => {
       setAddedToCart(false);
     }, 3000);
+    
   }
 
   const navigate = useNavigate();

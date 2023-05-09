@@ -7,6 +7,8 @@ import NoCartError from './NoCartError'
 import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
+import Loading from '../utils/Loading'
+import Error from '../utils/Error'
 
 export default function CartCheckout() {
 
@@ -16,6 +18,7 @@ export default function CartCheckout() {
     const [subTotal, setSubTotal] = useState(0);
     const [shipping, setShipping] = useState(50);
     const [paymentMethod, setPaymentMethod] = useState('online');
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         let total = 0;
@@ -46,18 +49,27 @@ export default function CartCheckout() {
                 shipping_charge: shipping,
                 payment_method: paymentMethod,
             })
-            console.log(order);
+
         }
     }, [cartItems, info, shipping, paymentMethod])
 
     const [orderPlacedState, setOrderPlacedState] = useState(false);
+    const [showErrorMsg, setShowErrorMsg] = useState(false);
+    const [errorMsg, setErrorMsg] = useState('');
 
     const orderPlaced = async (e) => {
-        console.log(order)
+        setLoading(true);
         e.preventDefault();
         try {
             const response = await axios.post('place_order/', order);
-            console.log(response.data);
+            // check for unavailable products
+            if(response.data.error) {
+                setShowErrorMsg(true);
+                setErrorMsg(response.data.error);
+                setLoading(false);
+                return;
+            }
+
             if (paymentMethod === 'online') {
                 if ((response.data.status === 'SUCCESS' || response.data.status === 'success') && response.data.GatewayPageURL) {
                     window.location.href = response.data.GatewayPageURL;
@@ -68,16 +80,19 @@ export default function CartCheckout() {
                 setOrderPlacedState(true);
                 localStorage.removeItem('cart');
             }
+            setLoading(false);
         }
         catch (error) {
             console.log(error);
+            setLoading(false);
         }
-        console.log("Order Placed")
     }
 
     return (
         <div>
+            {loading && <Loading />}
             {cartItems.length === 0 && <NoCartError />}
+            {showErrorMsg && <Error error={errorMsg}/>}
             {cartItems.length !== 0 && <div>
                 {!orderPlacedState && <div>
                     <div className='grid grid-cols-1 xl:grid-cols-2'>

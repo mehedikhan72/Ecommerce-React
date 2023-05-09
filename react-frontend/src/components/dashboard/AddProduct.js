@@ -143,7 +143,7 @@ export default function AddProduct() {
         }
     }
 
-    // TOTO: Make sure the slug(product name is unique)
+    // TODO: Make sure the slug(product name is unique)
 
     const removeImages = () => {
         setImages([]);

@@ -26,13 +26,13 @@ export default function SavedProducts() {
     return (
         <div>
             {products.length === 0 && !fetchComleted && <Loading />}
-            {products.length === 0 && fetchComleted && <div>
+            {products.length === 0 && fetchComleted && <div className='my-20 md:my-40'>
                 <p className='small-headings'>You have no saved products.</p>
                 <div className='m-10 text-center'>
                     <Link to={{ pathname: '/' }}><button className='my-btns'>Continue Shopping</button></Link>
                 </div>
             </div>}
-            {products.length !== 0 && <div>
+            {products.length !== 0 && <div className='my-10'>
                 <p className='normal-headings'>My Saved Products</p>
                 <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 mx-5 sm:mx-10 md:mx-20 lg:mx-40">
                     {products.map((product) => (

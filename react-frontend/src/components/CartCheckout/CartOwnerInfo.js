@@ -3,9 +3,11 @@ import AuthContext from '../context/AuthContext';
 import axios from '../axios/AxiosSetup'
 import { FormControl, FormControlLabel, Radio, RadioGroup } from '@material-ui/core';
 import { Link } from 'react-router-dom';
+import Loading from '../utils/Loading';
 
 export default function CartOwnerInfo(props) {
     const { user } = useContext(AuthContext);
+    const [loading, setLoading] = useState(true);
 
     const [buyerInfo, setBuyerInfo] = useState(null);
     const [availableInfo, setAvailableInfo] = useState(false);
@@ -19,18 +21,22 @@ export default function CartOwnerInfo(props) {
 
     useEffect(() => {
         const fetchUserData = async () => {
+            setLoading(true);
             try {
                 const response = await axios.get(`get_user_data/${user.user_id}/`);
                 setBuyerInfo(response.data);
                 props.setInfo(response.data);
                 setAvailableInfo(true);
+                setLoading(false);
             }
             catch (error) {
                 console.log(error);
+                setLoading(false);
             }
         }
 
         const fetchSavedUserInfo = () => {
+            setLoading(true);
             const savedUserInfo = localStorage.getItem('saved_user_info');
             if (savedUserInfo) {
                 setBuyerInfo(JSON.parse(savedUserInfo));
@@ -41,6 +47,7 @@ export default function CartOwnerInfo(props) {
                 setPhone(JSON.parse(savedUserInfo).phone);
                 setAddress(JSON.parse(savedUserInfo).address);
             }
+            setLoading(false);
         }
 
         if (user) {
@@ -98,6 +105,7 @@ export default function CartOwnerInfo(props) {
 
     return (
         <div>
+            {loading && <Loading />}
             {availableInfo && <div>
                 <p className='normal-headings'>Here is your information, {buyerInfo.first_name}.</p>
                 <div className='flex justify-between items-center'>
