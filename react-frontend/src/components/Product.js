@@ -51,7 +51,9 @@ export default function Product() {
     }
 
     fetchProduct();
-    ifInWishlist();
+    if (user) {
+      ifInWishlist();
+    }
 
   }, [slug, productId])
 
@@ -148,7 +150,7 @@ export default function Product() {
       }
     }
 
-    if (slug) {
+    if (slug && user) {
       checkEligibility();
     }
 
@@ -224,7 +226,7 @@ export default function Product() {
           <p className='small-headings text-left mx-0'>{productData.description}</p>
         </div>
         {isEligibleReviewer && <PostReviews slug={slug} reviewAdded={reviewAdded} setReviewAdded={setReviewAdded} />}
-        <GetReviews slug={slug} reviewAdded={reviewAdded} avgRating={productData.avg_rating} totalReviews={productData.total_reviews}/>
+        <GetReviews slug={slug} reviewAdded={reviewAdded} avgRating={productData.avg_rating} totalReviews={productData.total_reviews} />
         <QnA slug={slug} />
 
         <SimilarProducts slug={productData.category.slug} />

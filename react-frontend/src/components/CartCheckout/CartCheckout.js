@@ -63,10 +63,11 @@ export default function CartCheckout() {
         try {
             const response = await axios.post('place_order/', order);
             // check for unavailable products
-            if(response.data.error) {
+            if (response.data.error) {
                 setShowErrorMsg(true);
                 setErrorMsg(response.data.error);
                 setLoading(false);
+                window.scrollTo(0, 0);
                 return;
             }
 
@@ -88,11 +89,13 @@ export default function CartCheckout() {
         }
     }
 
+    // TODO: COD is not available outside comilla.
+
     return (
         <div>
             {loading && <Loading />}
             {cartItems.length === 0 && <NoCartError />}
-            {showErrorMsg && <Error error={errorMsg}/>}
+            {showErrorMsg && <Error error={errorMsg} />}
             {cartItems.length !== 0 && <div>
                 {!orderPlacedState && <div>
                     <div className='grid grid-cols-1 xl:grid-cols-2'>
@@ -104,7 +107,11 @@ export default function CartCheckout() {
                             {cartItems.map((item) => (
                                 <div key={item.id} className='flex justify-between items-center m-5'>
                                     <div className='flex justify-center items-center'>
-                                        <img className='w-[100px] h-[100px] lg:w-[200px] lg:h-[200px]' src={item.productData.intro_image}></img>
+                                        <img
+                                            className='w-[100px] h-[100px] lg:w-[200px] lg:h-[200px]'
+                                            src={item.productData.intro_image}
+                                            style={{ borderRadius: '10px' }}
+                                        ></img>
                                         <div>
                                             <p className='small-headings text-left'>{item.productData.name}</p>
                                             <p className='normal-text text-left'>Size: {item.size[0].size}</p>

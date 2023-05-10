@@ -29,8 +29,6 @@ import RefundPolicy from './components/legal/RefundPolicy';
 import EditProduct from './components/EditProduct';
 
 
-
-
 function App() {
   return (
     <div className="App overflow-x-hidden min-h-screen">

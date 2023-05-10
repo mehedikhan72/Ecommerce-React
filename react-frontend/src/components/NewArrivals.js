@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import axios from './axios/AxiosSetup'
 import { Link } from 'react-router-dom';
 import Loading from './utils/Loading';
+import StarRatings from 'react-star-ratings';
 
 export default function NewArrivals() {
   const [products, setProducts] = useState([])
@@ -43,6 +44,11 @@ export default function NewArrivals() {
                   <div className='price'>
                     <p>TK {product.regular_price}</p>
                   </div>}
+
+                {product.total_reviews > 0 && <div className='flex justify-center items-center m-2'>
+                  <StarRatings starRatedColor="orange" starDimension="25px" starSpacing="0px" rating={product.avg_rating} />
+                  <p className='normal-text text-lg ml-2'>({product.total_reviews})</p>
+                </div>}
               </div>
             </Link>
           ))}

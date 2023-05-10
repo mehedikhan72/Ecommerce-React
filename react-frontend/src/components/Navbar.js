@@ -74,7 +74,7 @@ export default function Navbar() {
     return (
         <div>
             {showConfirmation && <Confirmation message={message} yesClicked={logout} noClicked={noClicked} event={"logout"} />}
-            <div className='w-screen h-[50px] sm:h-[70px] lg:h-[90px] z-10 bg-black text-white drop-shadow-lg'>
+            <div className='relative w-screen h-[50px] sm:h-[70px] lg:h-[90px] bg-black text-white drop-shadow-lg z-[9999]'>
                 <div className='px-8 flex justify-between items-center w-full h-full'>
                     <div className='flex items-center'>
                         <h1 className='text-2xl font-bold mr-4 sm:text-3xl'>HalalBrothers</h1>
@@ -131,7 +131,7 @@ export default function Navbar() {
 
                 {/* TODO: fix z index of user options, its underneath the product images in a phone view. */}
 
-                {userOptionsOn && <div ref={dropdownRef} className='z-50 flex flex-col items-center justify-center border border-gray-500 bg-white m-5 p-5 w-[210px] rounded-md top-56 sm:top-12 right-10 fixed '>
+                {userOptionsOn && <div ref={dropdownRef} className='z-[9999] flex flex-col items-center justify-center border border-gray-500 bg-white m-5 p-5 w-[210px] rounded-md top-56 sm:top-12 right-10 fixed '>
                     <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: `/account/edit` }}><button className='my-btns w-[160px] m-1'><div className='flex justify-center items-center'><i class='bx bxs-edit text-xl m-1'></i><p>Edit Account</p></div></button></Link>
                     <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: `/${user.username}/orders` }}><button className='my-btns w-[160px] m-1'><div className='flex justify-center items-center'><i class='bx bx-shopping-bag text-xl m-1' ></i><p>Track Orders</p></div></button></Link>
                     <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: '/saved-products' }}><button className='my-btns w-[160px] m-1'><div className='flex justify-center items-center'><i class='bx bx-bookmarks text-xl m-1' ></i><p>Saved</p></div></button></Link>

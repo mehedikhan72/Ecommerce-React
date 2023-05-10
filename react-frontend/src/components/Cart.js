@@ -46,7 +46,11 @@ export default function Cart() {
                             <div className='flex flex-wrap items-center justify-between border border-gray-500 mx-5 my-10 p-5 rounded-md'>
                                 <div className='flex items-center'>
                                     <div>
-                                        <img className='w-[100px] h-[100px] lg:w-[200px] lg:h-[200px] object-cover' src={item.productData.intro_image}></img>
+                                        <img
+                                            className='w-[100px] h-[100px] lg:w-[200px] lg:h-[200px] object-cover'
+                                            src={item.productData.intro_image}
+                                            style={{ borderRadius: '10px' }}
+                                        ></img>
                                     </div>
                                     <div>
                                         <p className='small-headings'>{item.productData.name}</p>
@@ -74,7 +78,7 @@ export default function Cart() {
                 <div>
                     <p className='normal-headings text-right'>Total: {totalPrice}</p>
                     <div className='flex justify-end mx-10'>
-                        <Link to={{ pathname: '/cart/checkout'}}><button className='my-btns sm:my-big-btns'>Proceed To Checkout</button></Link>
+                        <Link to={{ pathname: '/cart/checkout' }}><button className='my-btns sm:my-big-btns'>Proceed To Checkout</button></Link>
                     </div>
 
                 </div>

@@ -65,6 +65,7 @@ export default function ProductCheckout() {
                 setShowErrorMsg(true);
                 setErrorMsg(response.data.error);
                 setLoading(false);
+                window.scrollTo(0, 0);
                 return;
             }
 
@@ -86,6 +87,8 @@ export default function ProductCheckout() {
         }
     }
 
+    // TODO: COD is not available outside comilla.
+
     return (
         <div>
             {loading && <Loading />}
@@ -102,7 +105,11 @@ export default function ProductCheckout() {
                             {cartItems.map((item) => (
                                 <div key={item.id} className='flex justify-between items-center m-5'>
                                     <div className='flex justify-center items-center'>
-                                        <img className='w-[100px] h-[100px] lg:w-[200px] lg:h-[200px]' src={item.productData.intro_image}></img>
+                                        <img
+                                            className='w-[100px] h-[100px] lg:w-[200px] lg:h-[200px]'
+                                            src={item.productData.intro_image}
+                                            style={{ borderRadius: '10px' }}
+                                        ></img>
                                         <div>
                                             <p className='small-headings text-left'>{item.productData.name}</p>
                                             <p className='normal-text text-left'>Size: {item.size[0].size}</p>
