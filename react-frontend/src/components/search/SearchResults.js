@@ -6,7 +6,6 @@ import Loading from '../utils/Loading';
 import { Link } from 'react-router-dom';
 
 export default function SearchResults() {
-    // TODO: Add pagination (load more) for search results
 
     const [searchParams] = useSearchParams();
     const query = searchParams.get("query");

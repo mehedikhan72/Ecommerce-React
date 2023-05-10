@@ -32,13 +32,13 @@ export default function TopSales() {
     console.log(products)
     return (
         <div>
-            <p className='normal-headings'>Our Top Sales</p>
+            <p className='normal-headings'>OUR TOP SALES</p>
             <div className='relative flex items-center z-10'>
                 <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideLeft} size={40} />
                 <div id='slider' className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
                     {products.map((item) => (
                         <div key={item.id} className='relative inline-block p-2 z-10'>
-                            <Link to={{ pathname: `/product/${item.slug}`}}>
+                            <Link to={{ pathname: `/product/${item.slug}` }}>
                                 <img
                                     className='w-[320px] md:w-[420px] h-[320px] md:h-[420px] object-cover cursor-pointer ease-in-out duration-300'
                                     src={`http://127.0.0.1:8000${item.intro_image}`}

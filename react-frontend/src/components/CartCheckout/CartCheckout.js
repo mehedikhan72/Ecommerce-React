@@ -40,6 +40,7 @@ export default function CartCheckout() {
     // Creating the obj that will be sent to the server
 
     const [order, setOrder] = useState(null);
+    const [outsideComilla, setOutsideComilla] = useState(false); // Bool field.
 
     useEffect(() => {
         if (info) {
@@ -48,6 +49,7 @@ export default function CartCheckout() {
                 order_items: cartItems,
                 shipping_charge: shipping,
                 payment_method: paymentMethod,
+                outside_comilla: outsideComilla,
             })
 
         }
@@ -58,6 +60,12 @@ export default function CartCheckout() {
     const [errorMsg, setErrorMsg] = useState('');
 
     const orderPlaced = async (e) => {
+        if(outsideComilla === true && paymentMethod === 'COD') {
+            setErrorMsg('Cash on delivery is not available outside Comilla. Please pay online.');
+            setShowErrorMsg(true);
+            window.scrollTo(0, 0);
+            return;
+        } 
         setLoading(true);
         e.preventDefault();
         try {
@@ -78,8 +86,11 @@ export default function CartCheckout() {
             }
             else {
                 // COD payments.
+                setErrorMsg('');
+                setShowErrorMsg(false);
                 setOrderPlacedState(true);
                 localStorage.removeItem('cart');
+                window.scrollTo(0, 0);
             }
             setLoading(false);
         }
@@ -89,7 +100,6 @@ export default function CartCheckout() {
         }
     }
 
-    // TODO: COD is not available outside comilla.
 
     return (
         <div>
@@ -100,7 +110,7 @@ export default function CartCheckout() {
                 {!orderPlacedState && <div>
                     <div className='grid grid-cols-1 xl:grid-cols-2'>
                         <div>
-                            <CartOwnerInfo setShipping={setShipping} setInfo={setInfo} />
+                            <CartOwnerInfo setShipping={setShipping} setInfo={setInfo} setOutsideComilla={setOutsideComilla}/>
                         </div>
                         <div className='border-l-4 h-fit'>
                             <p className='normal-headings'>Order Summary</p>

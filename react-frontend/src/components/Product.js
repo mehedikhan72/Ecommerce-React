@@ -76,9 +76,6 @@ export default function Product() {
   //   setSizeStock((prev) => prev - count);
   // }
 
-  //TODO: We will deal with 'adding more to cart than available' in the cart page when the user tries to checkout.
-  //That would stop any unwanted sale from happening.
-
   useEffect(() => {
     const fetchStock = async () => {
       if (productSize) {
@@ -156,11 +153,6 @@ export default function Product() {
 
   }, [slug, reviewAdded])
 
-
-  // TODO: BUG: we made sure user cannot add to cart more than that is available. but when they add the same 
-  // product to the cart again, we show the old number like.. "only 3 left", wherease it's possible that he
-  // added those 3 items before. need to come up with a solution to this. 
-
   return (
     <div>
       <CategoryOptions />
@@ -205,7 +197,6 @@ export default function Product() {
               <Quantity selectedProductQuantity={selectedProductQuantity} sizeStock={sizeStock} />
             </div>}
 
-            {/* TODO: Add a different animation later */}
             {addedToCart &&
               <p className='fixed success-text text-center w-[250px] bottom-5 right-5 animate-bounce'>Added to cart</p>
             }

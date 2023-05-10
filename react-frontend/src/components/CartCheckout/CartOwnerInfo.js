@@ -60,13 +60,16 @@ export default function CartOwnerInfo(props) {
     }, [user])
 
     const [deliveryValue, setDeliveryValue] = useState('inside-cumilla');
+
     const handleDeliveryChange = (event) => {
         setDeliveryValue(event.target.value);
         if (event.target.value === 'inside-cumilla') {
             props.setShipping(50);
+            props.setOutsideComilla(false);
         }
         else if (event.target.value === 'outside-cumilla') {
             props.setShipping(100);
+            props.setOutsideComilla(true);
         }
     };
 
@@ -100,8 +103,6 @@ export default function CartOwnerInfo(props) {
             localStorage.setItem('saved_user_info', JSON.stringify(buyerInfo));
         }
     }, [buyerInfo])
-
-    // TODO: fix bug. save updated data to localstorage properly.
 
     return (
         <div>

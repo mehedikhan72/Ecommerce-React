@@ -15,6 +15,7 @@ export default function GetImages(props) {
             try {
                 const response = await axios.get(`images/${productId}/`)
                 setImages(response.data)
+                console.log(response.data)
             } catch (error) {
                 console.log(error)
             }
@@ -45,8 +46,27 @@ export default function GetImages(props) {
         else {
             setCurrentIndex(currentIndex + 1)
         }
-
     }
+
+    const autoSlide = () => {
+
+        if (parseInt(currentIndex) === parseInt(images.length - 1)) {
+            setCurrentIndex(0)
+        }
+        else {
+            setCurrentIndex(currentIndex + 1)
+        }
+    }
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            if (images.length > 1) {
+                autoSlide()
+            }
+
+        }, 4000);
+        return () => clearInterval(interval);
+    }, [currentIndex])
 
     return (
         <div>
@@ -61,7 +81,7 @@ export default function GetImages(props) {
                 <div className='flex top-4 py-2 justify-center'>
                     {images.map((image, index) => (
                         <div key={index} className='2xl cursor-pointer'>
-                            <RxDotFilled onClick={() => setCurrentIndex(index)}/>
+                            <RxDotFilled onClick={() => setCurrentIndex(index)} />
                         </div>
                     ))}
                 </div>

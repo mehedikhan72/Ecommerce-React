@@ -72,8 +72,6 @@ export default function EditProduct() {
         }
     }, [productId])
 
-    // TODO: Make sure the stock count it the same as sum(quantity * size)
-
     console.log(images)
 
     // Codes from add prod
@@ -252,8 +250,6 @@ export default function EditProduct() {
             console.log(error);
         }
     }
-
-    // TODO: Make sure the slug(product name is unique)
 
     const removeImages = () => {
         setImages([]);

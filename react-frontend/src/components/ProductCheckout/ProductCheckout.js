@@ -39,6 +39,7 @@ export default function ProductCheckout() {
     // Creating the obj that will be sent to the server
 
     const [order, setOrder] = useState(null);
+    const [outsideComilla, setOutsideComilla] = useState(false); // Bool field.
 
     useEffect(() => {
         if (info) {
@@ -47,15 +48,24 @@ export default function ProductCheckout() {
                 order_items: cartItems,
                 shipping_charge: shipping,
                 payment_method: paymentMethod,
+                outside_comilla: outsideComilla,
             })
         }
     }, [cartItems, info, shipping, paymentMethod])
+
+    console.log(outsideComilla)
 
     const [orderPlacedState, setOrderPlacedState] = useState(false);
     const [showErrorMsg, setShowErrorMsg] = useState(false);
     const [errorMsg, setErrorMsg] = useState('');
 
     const orderPlaced = async (e) => {
+        if (outsideComilla === true && paymentMethod === 'COD') {
+            setErrorMsg('Cash on delivery is not available outside Comilla. Please pay online.');
+            setShowErrorMsg(true);
+            window.scrollTo(0, 0);
+            return;
+        }
         setLoading(true);
         e.preventDefault();
         try {
@@ -78,6 +88,9 @@ export default function ProductCheckout() {
                 // COD payments.
                 setOrderPlacedState(true);
                 localStorage.removeItem('buy_now_product');
+                setErrorMsg('');
+                setShowErrorMsg(false);
+                window.scrollTo(0, 0);
             }
             setLoading(false);
         }
@@ -87,18 +100,18 @@ export default function ProductCheckout() {
         }
     }
 
-    // TODO: COD is not available outside comilla.
+    const fromProductPage = true;
 
     return (
         <div>
             {loading && <Loading />}
             {cartItems.length === 0 && <NoProductError />}
-            {showErrorMsg && <Error error={errorMsg} />}
+            {showErrorMsg && <Error error={errorMsg} fromProductPage={fromProductPage}/>}
             {cartItems.length !== 0 && <div>
                 {!orderPlacedState && <div>
                     <div className='grid grid-cols-1 xl:grid-cols-2'>
                         <div>
-                            <UserInfo setShipping={setShipping} setInfo={setInfo} />
+                            <UserInfo setShipping={setShipping} setInfo={setInfo} setOutsideComilla={setOutsideComilla} />
                         </div>
                         <div className='border-l-4 h-fit'>
                             <p className='normal-headings'>Order Summary</p>

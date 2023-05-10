@@ -94,13 +94,35 @@ export default function AddProduct() {
     }
 
     const removeSize = (size) => {
-        console.log("removing size: ", size, " from the list")
         setSizes(sizes.filter((s) => s.size !== size));
     }
 
     const uploadSizes = async (id) => {
+        const sizesObj = {
+            sizes: sizes,
+            stock: stock
+        }
         try {
-            const response = await axios.post(`add_product_sizes/${id}/`, sizes);
+            const response = await axios.post(`add_product_sizes/${id}/`, sizesObj);
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const stockCountOkay = () => {
+        let total = 0;
+        sizes.forEach((s) => {
+            total += s.available_quantity;
+        });
+        return (total === parseInt(stock))
+    }
+
+    const uniqueNameGiven = async () => {
+        console.log("Checking if name is unique")
+        try {
+            const response = await axios.get(`is_name_unique/${name}/`);
+            console.log(response.data)
+            return response.data.unique;
         } catch (error) {
             console.log(error);
         }
@@ -109,7 +131,6 @@ export default function AddProduct() {
     // Form submission
 
     const handleSubmit = async (e) => {
-        console.log("submitted")
         e.preventDefault();
         const productData = {
             name,
@@ -120,15 +141,30 @@ export default function AddProduct() {
         }
 
         try {
-            console.log(images.length);
             if (images.length > 0 && sizes.length > 0) {
                 setLoading(true);
-                const response = await axios.post(`category/${category[0].slug}/`, productData);
-                uploadImages(response.data.id);
-                uploadSizes(response.data.id);
-                setProductAdded(true);
-                setAddedProductSlug(response.data.slug);
-                setLoading(false);
+                if (stockCountOkay()) {
+                    const isNameUnique = await uniqueNameGiven();
+                    if (isNameUnique) {
+                        const response = await axios.post(`category/${category[0].slug}/`, productData);
+                        console.log(response.data);
+                        uploadImages(response.data.id);
+                        uploadSizes(response.data.id);
+                        setProductAdded(true);
+                        setAddedProductSlug(response.data.slug);
+                        setLoading(false);
+                        window.scrollTo(0, 0);
+                    }
+                    else {
+                        setError("Product name already exists. Please choose another name.");
+                        setLoading(false);
+                    }
+
+                } else {
+                    setError("Stock count does not match the sum of quantity of all sizes!");
+                    setLoading(false);
+                }
+
             }
             else {
                 if (images.length === 0) {
@@ -143,14 +179,11 @@ export default function AddProduct() {
         }
     }
 
-    // TODO: Make sure the slug(product name is unique)
-    // TODO: Make sure the stock count it the same as sum(quantity * size)
-
     const removeImages = () => {
         setImages([]);
         document.getElementById('images').value = null;
     }
-    console.log(error);
+
     return (
         <div>
             {loading && <Loading />}

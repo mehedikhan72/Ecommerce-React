@@ -129,8 +129,6 @@ export default function Navbar() {
                     </div>
                 </ul>}
 
-                {/* TODO: fix z index of user options, its underneath the product images in a phone view. */}
-
                 {userOptionsOn && <div ref={dropdownRef} className='z-[9999] flex flex-col items-center justify-center border border-gray-500 bg-white m-5 p-5 w-[210px] rounded-md top-56 sm:top-12 right-10 fixed '>
                     <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: `/account/edit` }}><button className='my-btns w-[160px] m-1'><div className='flex justify-center items-center'><i class='bx bxs-edit text-xl m-1'></i><p>Edit Account</p></div></button></Link>
                     <Link onClick={() => setUserOptionsOn(false)} to={{ pathname: `/${user.username}/orders` }}><button className='my-btns w-[160px] m-1'><div className='flex justify-center items-center'><i class='bx bx-shopping-bag text-xl m-1' ></i><p>Track Orders</p></div></button></Link>

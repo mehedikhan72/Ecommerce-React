@@ -64,9 +64,11 @@ export default function UserInfo(props) {
         setDeliveryValue(event.target.value);
         if (event.target.value === 'inside-cumilla') {
             props.setShipping(50);
+            props.setOutsideComilla(false);
         }
         else if (event.target.value === 'outside-cumilla') {
             props.setShipping(100);
+            props.setOutsideComilla(true);
         }
     };
 

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 export default function ProductCategories() {
     return (
         <div>
-            <p className='normal-headings'>Product Categories</p>
+            <p className='normal-headings'>PRODUCT CATEGORIES</p>
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 mx-5 sm:mx-10 md:mx-20 lg:mx-40">
                 <Link to={{ pathname: '/category/shirts' }}>
                     <div className='each-item'>

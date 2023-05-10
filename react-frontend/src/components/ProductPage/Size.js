@@ -34,6 +34,7 @@ export default function Size(props) {
         // TODO: BUG, when page entirely reloads, a size is selected and 
         // the menu is selected again, the entire DOM shifts a bit to the left.
         // Need to fix this.
+        
         <div className="w-[300px]">
             <p className="ml-10 my-5 lg:ml-20 small-headings text-left">Size: {selectedSize ? selectedSize[0].size : "None"}</p>
             <Select className="mx-10 my-5 lg:mx-20 " options={sizes} placeholder={selectedSize ? selectedSize[0].size : "Select..."} labelField="size" valueField="size" onChange={(value) => setSelectedSize(value)} />
