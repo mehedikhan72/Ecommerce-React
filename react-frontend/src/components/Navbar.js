@@ -74,11 +74,11 @@ export default function Navbar() {
     return (
         <div>
             {showConfirmation && <Confirmation message={message} yesClicked={logout} noClicked={noClicked} event={"logout"} />}
-            <div className='relative w-screen h-[50px] sm:h-[70px] lg:h-[90px] bg-black text-white drop-shadow-lg z-[9999]'>
-                <div className='px-8 flex justify-between items-center w-full h-full'>
-                    <div className='flex items-center'>
+            <div className='relative w-screen h-[120px] bg-black text-white drop-shadow-lg z-[99]'>
+                <div className='pr-4 px-2 flex justify-between items-center w-full h-full'>
+                    <div className='flex items-center '>
+                        <img className='h-24 w-24 mr-2' src="https://lh3.googleusercontent.com/L9oYUyD-wOEH3sa_13t1P45RW5jLsPWvGUcTMbhsS_lGCBWZME2XiRHVc0ciZBti5LubTP0HIATGY2AYgkj0F-Ao9yc-It5sZ16ZC5Lza2Fv91dQm83XcaxY7KdrsanDXgaMu6sHPtJeh3uq0i2ok4r1sUb7pCL4JRZdQbBsHiP7ynS1ib7U065YEkOdnYpzKcCUkzXAFQuHbxF-P3qr1yvlNojW8GpPMLKkXFMPE7KtnCXxG7Lk5noNOhVWTR8hU_A3O-mLJ6PqZwil3oHZ0gdRIpHePl5JQOtGSwF8SriOx9Sjh5Sn_23-5oFanKQpbwUNHrPOoZBE6OG2PcnyPrgpagjZ4h4sSdX_ug1XINHt101_beECwa9X5PvTDTUvMFFqU3Mb_4hpH1fL_QxNS55izAkiBdw6s7bYECukY8EWKtzpFkb9OtOgtNEc7UhDPNtI-tse36raKcxK-PXpX6yXs1gf_SJtKDWyq2PBomJfSjb3cepFztnxLB1epkAraQiCG855RmTVKYBw0oG4RGpBBGLL-NQN9oBNqo1_tt61EnkZBJzPjjGrABGxTdMOCDSBsQWyPWQ3lPK0i1E-MKY0H38F4RMC8zBQ-detR48e-wuOCjYdSSfzDh3aK6QRXfomPJ90IfzomWQcW9pcoyLsbDYgHmrfNZ4rWxemciDxWrPeS1GX7ygpvXMMmqOZsiH5t_Mhh9yFrnKDJ3uDZzQ0Oho1bbEp_F5xZNByZbhA27_tBiNYsqmQLXlgUSnarAW5-muxghlhZmucbAlt2gdIPo_itDOkUALDq0yZYsg1Sctq1I8q3T53bwM6r4UbQ_1sryarTkVBzBrA2RHKv-JihlxY86-5Hbd9DcURFaSX3tnl74hLyhAGLN5nQGSy-VnCBjf4_WX_sVv5p0BrvXs-C1M_F3OZhVG0OspoGtyN=w502-h497-s-no?authuser=0"/>
                         <h1 className='text-2xl font-bold mr-4 sm:text-3xl'>HalalBrothers</h1>
-
                     </div>
                     <div className='hidden sm:flex pr-5 items-center'>
                         <ul className='hidden sm:flex'>

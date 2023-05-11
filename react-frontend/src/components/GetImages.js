@@ -64,7 +64,7 @@ export default function GetImages(props) {
                 autoSlide()
             }
 
-        }, 4000);
+        }, 3000);
         return () => clearInterval(interval);
     }, [currentIndex])
 

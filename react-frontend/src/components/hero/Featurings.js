@@ -37,7 +37,7 @@ export default function Featurings() {
                 autoSlide()
             }
 
-        }, 4000);
+        }, 3000);
         return () => clearInterval(interval);
     }, [currentIndex])
     return (

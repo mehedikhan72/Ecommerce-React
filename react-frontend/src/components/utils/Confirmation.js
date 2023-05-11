@@ -14,7 +14,7 @@ export default function Confirmation(props) {
   }
 
   return (
-    <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center flex-col z-50'>
+    <div className='fixed top-0 left-0 w-full h-full bg-black bg-opacity-80 flex justify-center items-center flex-col z-[999]'>
       <div className='h-auto py-2 px-4 bg-white text-black border border-gray-300 rounded-lg text-center max-w-[300px] md:max-w-[400px]'>
         {event === 'logout' && <i className='text-6xl bx bx-log-out pr-3 mt-5'></i>}
         {event === 'remove-moderators' && <i className='text-6xl bx bx-trash mt-5'></i>}

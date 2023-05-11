@@ -31,7 +31,7 @@ import EditProduct from './components/EditProduct';
 
 function App() {
   return (
-    <div className="App overflow-x-hidden min-h-screen">
+    <div className="App overflow-x-hidden min-h-screen bg-gray-100">
       <AuthProvider >
         <Navbar />
         <Searchbox />

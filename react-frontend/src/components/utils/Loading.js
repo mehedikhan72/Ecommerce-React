@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
 export default function Loading() {
     const classes = useStyles();
     return (
-        <div className="loading">
+        <div className="loading z-[10000]">
             <Backdrop
                 className={classes.backdrop} open
             >
