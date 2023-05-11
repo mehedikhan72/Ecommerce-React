@@ -7,7 +7,6 @@ export default function Options(props) {
     const enableViewOrders = () => {
         props.setViewOrdersViewOn(true)
         props.setAddProductViewOn(false)
-        props.setAddCategoryViewOn(false)
         props.setManageModeratorsViewOn(false)
         props.setUnansweredQuestionsViewOn(false)
     }
@@ -15,15 +14,6 @@ export default function Options(props) {
     const enableAddProduct = () => {
         props.setViewOrdersViewOn(false)
         props.setAddProductViewOn(true)
-        props.setAddCategoryViewOn(false)
-        props.setManageModeratorsViewOn(false)
-        props.setUnansweredQuestionsViewOn(false)
-    }
-
-    const enableAddCategory = () => {
-        props.setViewOrdersViewOn(false)
-        props.setAddProductViewOn(false)
-        props.setAddCategoryViewOn(true)
         props.setManageModeratorsViewOn(false)
         props.setUnansweredQuestionsViewOn(false)
     }
@@ -31,7 +21,6 @@ export default function Options(props) {
     const enableManageModerators = () => {
         props.setViewOrdersViewOn(false)
         props.setAddProductViewOn(false)
-        props.setAddCategoryViewOn(false)
         props.setManageModeratorsViewOn(true)
         props.setUnansweredQuestionsViewOn(false)
     }
@@ -39,7 +28,6 @@ export default function Options(props) {
     const enableUnansweredQuestions = () => {
         props.setViewOrdersViewOn(false)
         props.setAddProductViewOn(false)
-        props.setAddCategoryViewOn(false)
         props.setManageModeratorsViewOn(false)
         props.setUnansweredQuestionsViewOn(true)
     }
@@ -48,7 +36,6 @@ export default function Options(props) {
         <div className='flex flex-wrap justify-center items-center'>
             <button onClick={enableViewOrders} className='my-btns m-3 w-[200px]'>View Orders</button>
             <button onClick={enableAddProduct} className='my-btns m-3 w-[200px]'>Add Product</button>
-            <button onClick={enableAddCategory} className='my-btns m-3 w-[200px]'>Add Category</button>
             {user && user.is_admin && <button onClick={enableManageModerators} className='my-btns m-3 w-[200px]'>Manage Moderators</button>}
             <button onClick={enableUnansweredQuestions} className='my-btns m-3 w-[200px]'>Questions</button>
         </div>

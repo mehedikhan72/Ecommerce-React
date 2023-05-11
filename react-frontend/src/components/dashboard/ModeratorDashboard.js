@@ -12,7 +12,6 @@ import UnansweredQuestions from './UnansweredQuestions';
 export default function ModeratorDashboard() {
     const { user } = useContext(AuthContext);
     const [addProductViewOn, setAddProductViewOn] = useState(false);
-    const [addCategoryViewOn, setAddCategoryViewOn] = useState(false);
     const [viewOrdersViewOn, setViewOrdersViewOn] = useState(true);
     const [manageModeratorsViewOn, setManageModeratorsViewOn] = useState(false);
     const [unansweredQuestionsViewOn, setUnansweredQuestionsViewOn] = useState(false);
@@ -24,14 +23,12 @@ export default function ModeratorDashboard() {
                     <p className='normal-headings'>Welcome to moderator dashboard, {user.first_name}!</p>
                     <Options
                         setAddProductViewOn={setAddProductViewOn}
-                        setAddCategoryViewOn={setAddCategoryViewOn}
                         setViewOrdersViewOn={setViewOrdersViewOn}
                         setManageModeratorsViewOn={setManageModeratorsViewOn}
                         setUnansweredQuestionsViewOn={setUnansweredQuestionsViewOn}
                     />
                     <div className='m-10'>
                         {addProductViewOn && <AddProduct />}
-                        {addCategoryViewOn && <AddCategory />}
                         {viewOrdersViewOn && <ViewOrders />}
                         {manageModeratorsViewOn && <ManageModerators />}
                         {unansweredQuestionsViewOn && <UnansweredQuestions />}

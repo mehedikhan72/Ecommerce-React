@@ -191,7 +191,7 @@ export default function AddProduct() {
                 <p className='normal-headings'>Add a product!!</p>
                 <form onSubmit={handleSubmit}>
                     <div className='flex flex-wrap justify-center items-center'>
-                        <input required type="text" className='my-input-fields w-full md:w-2/5' value={name} onChange={(e) => setName(e.target.value)} placeholder="Name of the product" />
+                        <input maxLength={48} required type="text" className='my-input-fields w-full md:w-2/5' value={name} onChange={(e) => setName(e.target.value)} placeholder="Name of the product(max- 48 letters)" />
                         <input required type="number" min={0} className='my-input-fields w-full md:w-2/5' value={stock} onChange={(e) => setStock(e.target.value)} placeholder="Available Stocks" />
                         <input required type='number' min={0} className='my-input-fields w-full md:w-2/5' value={regular_price} onChange={(e) => setRegular_price(e.target.value)} placeholder="Regular Price" />
                         <input type='number' min={0} className='my-input-fields w-full md:w-2/5' value={discount_price} onChange={(e) => setDiscount_price(e.target.value)} placeholder="Discount Price" />

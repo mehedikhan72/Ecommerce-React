@@ -13,28 +13,51 @@ export default function SearchResults() {
     const [fetchComleted, setFetchCompleted] = useState(false);
     const [page, setPage] = useState(1);
     const [maxData, setMaxData] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    console.log(page);
 
     useEffect(() => {
         const fetchSearchResults = async () => {
+            setLoading(true);
+            setFetchCompleted(false);
             try {
-                const response = await axios.get(`search?query=${query}&page=${page}`)
-                console.log(response.data.results)
-                setProducts([...products, ...response.data.results]);
+                const response = await axios.get(`search?query=${query}&page=1`)
+                setProducts(response.data.results);
                 setMaxData(response.data.count)
+                setLoading(false);
+                setPage(1);
             } catch (error) {
                 console.log(error)
+                setLoading(false);
             }
             setFetchCompleted(true);
         }
 
         fetchSearchResults();
-
-    }, [query, page])
+    }, [searchParams])
 
     useEffect(() => {
-        setPage(1);
-        setProducts([]);
-    }, [query])
+        const fetchMoreSearchResults = async () => {
+            setLoading(true);
+            setFetchCompleted(false);
+            try {
+                const response = await axios.get(`search?query=${query}&page=${page}`)
+                setProducts([...products, ...response.data.results]);
+                setMaxData(response.data.count)
+                setLoading(false);
+
+            } catch (error) {
+                console.log(error)
+                setLoading(false);
+            }
+            setFetchCompleted(true);
+        }
+
+        if (page != 1) {
+            fetchMoreSearchResults();
+        }
+    }, [page])
 
     const seeMoreClicked = () => {
         setPage(page + 1);
@@ -43,7 +66,7 @@ export default function SearchResults() {
 
     return (
         <div>
-            {products.length === 0 && !fetchComleted && <Loading />}
+            {loading && <Loading />}
             {products.length === 0 && fetchComleted && <div>
                 <p className='small-headings'>Nothing found...please try some other words.</p>
                 <div className='m-10 text-center'>

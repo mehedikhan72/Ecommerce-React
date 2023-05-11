@@ -25,8 +25,8 @@ export default function NewArrivals() {
   return (
     <div>
       {loading && <Loading />}
-      {!loading && <div>
-        <p className='normal-headings'>NEW ARRIVALS</p>
+      {!loading && products.length !== 0 && <div className='mt-10 md:mt-20'>
+        <p className='normal-headings'>New Arrivals</p>
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 mx-5 sm:mx-10 md:mx-20 lg:mx-40">
           {products.map((product) => (
             <Link to={{ pathname: `/product/${product.slug}` }}>

@@ -31,8 +31,8 @@ export default function TopSales() {
 
     console.log(products)
     return (
-        <div>
-            <p className='normal-headings'>OUR TOP SALES</p>
+        <div className='mt-10 md:mt-20'>
+            <p className='normal-headings'>Our Top Sales</p>
             <div className='relative flex items-center z-10'>
                 <MdChevronLeft className='opacity-50 cursor-pointer hover:opacity-100' onClick={slideLeft} size={40} />
                 <div id='slider' className='w-full h-full overflow-x-scroll scroll whitespace-nowrap scroll-smooth scrollbar-hide'>

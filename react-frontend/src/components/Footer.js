@@ -10,10 +10,21 @@ export default function Footer() {
                     <div className='flex justify-center items-center'>
                         <i className='bx bx-phone normal-text ml-0 text-xl'></i>
                         <p className='normal-text ml-0'>017********</p>
+
                     </div>
                     <div className='flex justify-center items-center'>
                         <i className='bx bx-envelope normal-text ml-0 text-xl'></i>
                         <p className='normal-text ml-0'>halalbrothers@gmail.com</p>
+                    </div>
+                    <div className='flex justify-center items-center'>
+                        <i className='bx bxl-facebook-circle normal-text ml-0 text-xl'></i>
+                        <a className='normal-text ml-0 hover:underline hover:text-indigo-500'
+                            href='https://www.facebook.com/halalvaibro'
+                            target='_blank'
+                            rel='noopener noreferrer'
+                        >
+                            Facebook page
+                        </a>
                     </div>
                 </div>
                 <div className='w-full lg:w-1/3 flex flex-col justify-center items-center my-5'>
@@ -29,11 +40,11 @@ export default function Footer() {
                 </div>
             </div>
             <div className='flex flex-col justify-center items-center mx-0 md:mx-10 my-10'>
-                <div className='flex justify-center itemc-center'>
+                <div className='flex justify-center items-center'>
                     <p className="normal-text mx-2">Copyright 2023</p><i class='normal-text mx-0 bx bx-copyright'></i><p className="normal-text mx-2">Halal Brothers Limited</p>
                 </div>
 
-                <div className='flex justify-center itemc-center'>
+                <div className='flex justify-center items-center'>
                     <p className='normal-text mx-2'>Developed by</p>
                     <a
                         className="normal-text mx-0 hover:underline hover:text-indigo-500"

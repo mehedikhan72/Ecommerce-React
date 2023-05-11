@@ -14,6 +14,7 @@ import GetReviews from './productpage/GetReviews';
 import PostReviews from './productpage/PostReviews';
 import { Link } from 'react-router-dom';
 import AuthContext from './context/AuthContext';
+import Confirmation from './utils/Confirmation';
 
 export default function Product() {
 
@@ -153,9 +154,36 @@ export default function Product() {
 
   }, [slug, reviewAdded])
 
+  const deleteMessage = "Are you sure you want to delete this product? This action is irreversible!"
+  const event = "delete-product"
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false)
+
+  const deleteBtnClicked = () => {
+    setShowDeleteConfirmation(true);
+  }
+
+  const cancelDelete = () => {
+    setShowDeleteConfirmation(false);
+  }
+
+  const handleDelete = async () => {
+    try {
+      const response = await axios.delete(`delete_product/${slug}/`)
+      console.log(response)
+      if (response.status === 204) {
+        navigate('/')
+      }
+    }
+    catch (error) {
+      console.log(error)
+    }
+  }
+
+
   return (
     <div>
       <CategoryOptions />
+      {showDeleteConfirmation && <Confirmation message={deleteMessage} event={event} yesClicked={handleDelete} noClicked={cancelDelete} />}
       {productData && productId && <div>
         <div className='my-5 grid grid-cols-1 lg:grid-cols-2'>
           {/* IMAGES */}
@@ -209,8 +237,10 @@ export default function Product() {
           </div>
         </div>
         {user && (user.is_admin || user.is_moderator) && <div className='flex justify-center items-center'>
-          <Link to={{ pathname: `/edit-product/${slug}` }}><button className='my-btns'>Edit this Product</button></Link>
+          <Link to={{ pathname: `/edit-product/${slug}` }}><button className='my-btns w-[100px] m-1'>Edit</button></Link>
+          <button onClick={deleteBtnClicked} className='my-btns w-[100px] m-1'>Delete</button>
         </div>}
+
         <div className='my-20 mx-10 md:mx-20'>
           <p className='normal-headings text-left mx-0'>Product Description</p>
           <hr className='border-black ' />
