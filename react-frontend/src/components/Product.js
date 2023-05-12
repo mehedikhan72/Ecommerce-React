@@ -244,7 +244,7 @@ export default function Product() {
         <div className='my-20 mx-10 md:mx-20'>
           <p className='normal-headings text-left mx-0'>Product Description</p>
           <hr className='border-black ' />
-          <p className='small-headings text-left mx-0 whitespace-pre-wrap'>{productData.description}</p>
+          <p className='normal-text text-left mx-0 whitespace-pre-wrap'>{productData.description}</p>
         </div>
         {isEligibleReviewer && <PostReviews slug={slug} reviewAdded={reviewAdded} setReviewAdded={setReviewAdded} />}
         <GetReviews slug={slug} reviewAdded={reviewAdded} avgRating={productData.avg_rating} totalReviews={productData.total_reviews} />
