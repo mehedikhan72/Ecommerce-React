@@ -9,12 +9,12 @@ export default function TopSales() {
 
     const slideLeft = () => {
         var slider = document.getElementById('slider');
-        slider.scrollLeft = slider.scrollLeft - 400;
+        slider.scrollLeft = slider.scrollLeft - 800;
     };
 
     const slideRight = () => {
         var slider = document.getElementById('slider');
-        slider.scrollLeft = slider.scrollLeft + 400;
+        slider.scrollLeft = slider.scrollLeft + 800;
     };
 
     useEffect(() => {

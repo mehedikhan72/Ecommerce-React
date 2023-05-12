@@ -69,7 +69,6 @@ function App() {
           <Route path="*" element={<Custom404 />} />
 
         </Routes>
-        <Footer />
         <ScrollUp />
       </AuthProvider>
     </div>
