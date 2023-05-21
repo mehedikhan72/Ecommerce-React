@@ -33,6 +33,9 @@ export default function UserOrderDetails() {
 
     }, []);
 
+    console.log(orderData);
+    console.log(user);
+
     useEffect(() => {
         let totalItems = 0;
         orderItems.forEach((item) => {
@@ -67,12 +70,12 @@ export default function UserOrderDetails() {
         <div>
             {loading && <Loading />}
             {!loading && orderItems.length === 0 && <Custom404 />}
-            {!user || (!user.is_admin && !user.is_moderator) && <div>
+            {!user || (orderData.username !== user.username) && <div>
                 <div className='flex justify-center items-center'>
                     <p className='error-text text-center w-3/4'>You are not authorized to view this page.</p>
                 </div>
             </div>}
-            {user && (user.is_admin || user.is_moderator) && orderItems.length !== 0 && <div>
+            {user && (orderData.username === user.username) && orderItems.length !== 0 && <div>
                 <p className='normal-headings'>Track my order!</p>
                 <div className='mx-2 md:mx-5 p-5 flex justify-between items-center'>
                     <div className='flex justify-start items-center'>
@@ -100,7 +103,7 @@ export default function UserOrderDetails() {
                 <div className='mx-2 md:mx-5 p-5'>
                     <p className='normal-headings ml-0 text-left m-0 mb-2 py-5'>Payment Information</p>
                     <p className='normal-text ml-0'>Payment method: {orderData.payment_method}</p>
-                    
+
                     {orderData.payment_method === 'online' && orderData.online_paid && <div className='flex justify-start items-center ml-0'>
                         <p className='normal-text ml-0'>Paid</p>
                         <p className='success-text ml-0'>TK {orderData.total}</p>
